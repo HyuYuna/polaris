@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'gyb_regular';
+    src: url('GyeonggiBatangR00.woff2') format('woff2'),
+        url('GyeonggiBatangR00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gyb_bold';
+    src: url('GyeonggiBatangB00.woff2') format('woff2'),
+        url('GyeonggiBatangB00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

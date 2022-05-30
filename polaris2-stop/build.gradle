@@ -1,0 +1,182 @@
+group 'com.vsquare.polaris2'
+version '1.0.0-SNAPSHOT'
+
+buildscript {
+    repositories { maven { url "http://nexus.vsquare.cc/repository/maven-public/" } }
+    dependencies {
+        classpath 'org.hidetake:gradle-ssh-plugin:2.9.0'
+        classpath 'com.bmuschko:gradle-cargo-plugin:2.2.3'
+    }
+}
+
+apply plugin: 'java'
+
+apply plugin: 'maven'
+apply plugin: 'war'
+apply plugin: 'com.bmuschko.cargo'
+apply plugin: 'org.hidetake.ssh'
+
+//compileJava.options.encoding = 'UTF-8'
+//tasks.withType(JavaCompile){
+//    options.encoding = 'UTF-8'
+//}
+
+buildDir = 'target'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "http://nexus.vsquare.cc/repository/maven-public/" }
+}
+
+configurations.all {
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'minutes'
+}
+
+def polaris2CoreVersion = '1.74.91.RELEASE'
+
+def springFrameworkVersion = '4.3.7.RELEASE'
+def junitVersion = '4.12'
+def hamcrestVersion = '1.3'
+def cargoVersion = '1.4.5'
+def oracleJdbcDriverVersion = '12.2.0.1'
+
+//def mysqlJdbcDriverVersion = '5.1.46'
+
+def defaultHostname = '192.168.0.150'
+def defaultUsername = 'vsquare'
+def defaultPassword = 'qkqajrwk'
+def defaultPort = 18080
+def defaultServerType = 'local'
+
+ext {
+    port = (!project.hasProperty('port') || !port) ? defaultPort : port.toInteger()
+    hostname = (!project.hasProperty('hostname') || !hostname) ? defaultHostname : hostname
+    username = (!project.hasProperty('username') || !username) ? defaultUsername : username
+    password = (!project.hasProperty('password') || !password) ? defaultPassword : password
+    serverType = (!project.hasProperty('serverType') || !serverType) ? defaultServerType : serverType
+    serviceName = 'polaris2-stop'
+}
+
+war.archiveName = "${rootProject.name}.war"
+
+
+dependencies {
+    compile ("com.vsquare.polaris2:polaris2-core:${polaris2CoreVersion}") { changing = true }
+
+    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.7.0'
+//    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.20'
+
+//    compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.5.4'
+//    compile ("com.oracle.jdbc:ojdbc8:${oracleJdbcDriverVersion}")
+//    compile ("mysql:mysql-connector-java:${mysqlJdbcDriverVersion}")
+
+    cargo "org.codehaus.cargo:cargo-core-uberjar:$cargoVersion", "org.codehaus.cargo:cargo-ant:$cargoVersion"
+
+    testCompile ("org.springframework:spring-test:${springFrameworkVersion}")
+    testCompile ("junit:junit:${junitVersion}")
+    testCompile ("org.hamcrest:hamcrest-all:${hamcrestVersion}")
+
+    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.2'
+    compile files('src/main/webapp/WEB-INF/lib/IPINClient.jar')
+    compile files('src/main/webapp/WEB-INF/lib/NiceID.jar')
+    compile files('src/main/webapp/WEB-INF/lib/surem_api.jar')
+}
+
+cargo {
+    containerId = 'tomcat8x'
+    port = rootProject.ext.port
+
+    deployable {
+        context = '/'
+    }
+
+    remote {
+        hostname = rootProject.ext.hostname
+        username = rootProject.ext.username
+        password = rootProject.ext.password
+    }
+}
+
+remotes {
+    web {
+        host = rootProject.ext.hostname
+        if (rootProject.ext.serverType == 'prod') {
+            user = 'root'
+            password = 'dlsrnjsWkd!#24'
+        }
+
+        if (rootProject.ext.serverType == 'dev') {
+            user = rootProject.ext.username
+            password = rootProject.ext.password
+        }
+    }
+}
+
+ssh.settings {
+    knownHosts = allowAnyHosts
+    dryRun = false
+}
+
+task copyCoreResources {
+
+    doLast {
+        println "serverType = [$rootProject.ext.serverType]"
+        println "webAppDirName = [$project.webAppDirName]"
+        copy {
+            from "${project.webAppDirName}/WEB-INF/config/config-${rootProject.ext.serverType}.properties"
+            rename "config-${rootProject.ext.serverType}.properties", "config.properties"
+            into "${project.webAppDirName}/WEB-INF/config"
+        }
+    }
+}
+
+task deploy {
+
+    doLast {
+
+        if (rootProject.ext.serverType == 'prod') {
+
+            println "rootProject.ext.hostname : $rootProject.ext.hostname"
+            ssh.run {
+                session(remotes.web) {
+
+                    execute "rm -rf /usr/local/tomcat/ROOT.war"
+
+                    put from: "./target/libs/${rootProject.name}.war", into: "/usr/local/tomcat/ROOT.war"
+
+                    execute "service lms stop"
+
+                    execute "rm -rf /usr/local/tomcat/webapps/ROOT"
+                    execute "rm -rf /usr/local/tomcat/webapps/ROOT.war"
+
+                    execute "mv /usr/local/tomcat/ROOT.war /usr/local/tomcat/webapps/ROOT.war"
+
+                    execute "chown tomcat9:tomcat9 /usr/local/tomcat/webapps/ROOT.war"
+
+                    execute "service lms start"
+
+                    execute 'sleep 10'
+                }
+            }
+
+        } else if (rootProject.ext.serverType == 'dev') {
+            println "rootProject.ext.hostname : $rootProject.ext.hostname"
+            ssh.run {
+                session(remotes.web) {
+                    put from: "./target/libs/${rootProject.name}.war", into: "/home/vsquare/deploy/${rootProject.ext.serviceName}/webapps/ROOT.war"
+                    put from: "./docker-compose.yml", into: "/home/vsquare/deploy/${rootProject.ext.serviceName}/"
+                    execute "chmod +x /home/vsquare/deploy/${rootProject.ext.serviceName}/webapps/ROOT.war"
+                    execute "cd /home/vsquare/deploy/${rootProject.ext.serviceName} && /snap/bin/docker-compose down"
+                    execute "cd /home/vsquare/deploy/${rootProject.ext.serviceName} && /snap/bin/docker-compose up -d"
+                    execute 'sleep 10'
+                }
+            }
+        }
+    }
+}
+
+compileJava.dependsOn(copyCoreResources)
+cargoRedeployRemote.dependsOn(war)
+cargoDeployRemote.dependsOn(war)
+deploy.dependsOn(war)

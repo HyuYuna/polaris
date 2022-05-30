@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  app:
+    image: tomcat:9.0.37-jdk8-openjdk
+    volumes:
+      - /home/vsquare/deploy/polaris2-stop/webapps:/usr/local/tomcat/webapps/:rw
+      - /home/vsquare/deploy/polaris2-stop/logs:/usr/local/tomcat/logs/:rw
+      - /home/vsquare/deploy/polaris2-stop/data:/data/:rw
+      - /home/vsquare/deploy/polaris2-stop/data:/usr/local/tomcat/webapps/file/:rw
+    ports:
+      - "31028:8080"
+      - "31029:10000"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=dev"
+      - "SERVER_PORT=8080"
+      - "CATALINA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=10000 -Dfile.encoding=UTF-8"
+      - "TZ=Asia/Seoul"
+    restart: always

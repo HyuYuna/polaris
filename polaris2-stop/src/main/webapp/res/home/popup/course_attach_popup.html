@@ -1,0 +1,175 @@
+<style>
+    .course_attach_popup {
+        background: white;
+        box-sizing: border-box;
+    }
+
+    @media screen and (min-width: 1240px){
+        .course_attach_popup {
+            width: 450px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .course_attach_popup {
+            width: calc(100vw - 15px);
+        }
+    }
+    @media screen and (max-width: 767px){
+        .course_attach_popup {
+            width: calc(100vw - 15px);
+            min-height: 350px;
+        }
+    }
+
+    .popup_header {
+        background: white;
+        box-sizing: border-box;
+        border-bottom: 2px solid #701e97;
+    }
+
+    .popup_header .popup_title {
+        font-family: notokr-bold, sans-serif;
+        color: #232323;
+    }
+
+    .popup_header .close {
+        cursor: pointer;
+    }
+
+    @media screen and (min-width: 1240px){
+        .popup_header {
+            width: 100%;
+            padding: 40px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 24px;
+            letter-spacing: -0.48px;
+        }
+
+        .popup_header .close {
+            width: 24px;
+            margin-top: 5px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+
+        .popup_header .close {
+            width: 18px;
+        }
+
+    }
+    @media screen and (max-width: 767px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+
+        .popup_header .close {
+            width: 18px;
+        }
+    }
+
+    .popup_body {
+        box-sizing: border-box;
+        position: relative;
+        padding-left: 40px;
+        padding-right: 40px;
+        width: 100%;
+    }
+
+    .popup_body .popup_discription {
+        margin-top : 40px;
+        margin-bottom : 24px;
+        font-size: 14px;
+        color: #232323;
+    }
+    .popup_body .input_form .file_input_input { width: 100%; background: white; border: 1px solid #7147a9; color : #7147a9; height: 54px; line-height: 54px; margin-bottom : 12px;}
+    .popup_body .file_uploader {display: none;}
+    .popup_body .input_files {width: 100%; line-height: 54px; height: 54px; background: #f8f8f8; margin-bottom : 40px;}
+
+    .popup_body .file_status {margin-bottom: 40px; font-size: 14px;}
+
+    .button_group {font-size: 0;}
+    .button_group .cancel {font-size: 14px; color : #ffffff; background: #cccccc; border: 1px solid #cccccc; width: 50%; line-height: 54px; height: 54px;}
+    .button_group .continue {font-size: 14px; color: #cccccc; background: #7147a9; border : 1px solid #7147a9; width: 50%; line-height: 54px; height: 54px;}
+
+    @media screen and (min-width: 1240px){
+
+        .popup_body .input_form { width: 100%;}
+
+        .popup_body .input_files .file_name {line-height: 54px; height: 54px; margin-left: 16px; font-size: 14px;color: #232323; letter-spacing: -0.28px;}
+        .popup_body .input_files .file_size {font-size: 14px; color: #232323; letter-spacing: -0.28px; }
+        .popup_body .input_files .file_delete {width: 14px; height: 14px; float: right; margin-right: 16px;}
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .popup_body .input_form { width: 100%;}
+
+        .popup_body .input_files .file_name {line-height: 54px; height: 54px; margin-left: 16px;}
+        .popup_body .input_files .file_size {font-size: 14px; color: #232323; letter-spacing: -0.28px; }
+        .popup_body .input_files .file_delete {width: 14px; height: 14px; float: right; margin-right: 16px;}
+    }
+    @media screen and (max-width: 767px){
+        .popup_body .input_form { width: 100%;}
+
+        .popup_body .input_files .file_name {line-height: 54px; height: 54px; margin-left: 16px;}
+        .popup_body .input_files .file_size {font-size: 14px; color: #232323; letter-spacing: -0.28px; }
+        .popup_body .input_files .file_delete {width: 14px; height: 14px; float: right; margin-right: 16px;}
+
+    }
+
+</style>
+
+<!-- TODO : 텍스트 반응성 수정 -->
+
+<div id="course_attach_popup_dim" class="dim" data-lia-popup="#course_attach_popup"></div>
+<div id="course_attach_popup" class="course_attach_popup popup" data-lia-dim="#course_attach_popup_dim">
+
+    <div id="course_attach" class="mbskin">
+        <div class="popup_header">
+            <span class="popup_title">필요 증빙 서류 제출</span>
+            <img class="right close" src="/res/home/img/stop/common/btn_close.png" alt="닫기">
+        </div>
+
+        <div class="popup_body">
+            <p class="popup_discription">
+                해당 강좌는 양성교육 강좌로써,<br> 수강신청 시 필수서류를 첨부하셔야 합니다.<br/><br/>
+                - 신청 공문 1부(교육신청 > '양성교육' 클릭 ><br/> 신청페이지 하단 첨부파일에서 다운로드 가능)
+            </p>
+            <div class="input_form">
+                <label class="file_input_title"></label>
+                <label class="file_input_size"></label>
+                <button class="file_input_input" name="course_attach_file">파일첨부</button>
+            </div>
+
+            <div class="file_uploader"></div>
+            <div class="input_files">
+                <span class="file_name">제출된 파일이 없습니다.</span>
+                <span class="file_size">[0MB]</span>
+                <span class="file_delete"><img src="/res/home/img/stop/common/btn_cancel.png"></span>
+            </div>
+<!--            <div class="file_status">-->
+<!--                <span class="status_title">승인상태&nbsp:&nbsp</span>-->
+<!--                <span class="status_approve">미승인</span>-->
+<!--            </div>-->
+        </div>
+        <div class="button_group">
+            <button class="cancel">취소</button>
+            <button class="continue">확인</button>
+        </div>
+    </div>
+</div>

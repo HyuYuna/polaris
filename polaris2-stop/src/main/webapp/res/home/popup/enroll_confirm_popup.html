@@ -1,0 +1,361 @@
+<style>
+    .enroll_confirm_popup {
+        background: white;
+        box-sizing: border-box;
+    }
+    @media screen and (min-width: 1240px){
+        .enroll_confirm_popup {
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .enroll_confirm_popup {
+            width: calc(100vw - 64px);
+        }
+    }
+    @media screen and (max-width: 767px){
+        .enroll_confirm_popup {
+            width: calc(100vw - 32px);
+            min-height: 350px;
+        }
+    }
+    .popup_header {
+        background: white;
+        box-sizing: border-box;
+        border-bottom: 2px solid #701e97;
+    }
+    .popup_header .popup_title {
+        font-family: notokr-bold, sans-serif;
+        color: #232323;
+    }
+    .popup_header .close {
+        cursor: pointer;
+    }
+    @media screen and (min-width: 1240px){
+        .popup_header {
+            width: 100%;
+            padding: 30px;
+        }
+        .popup_header .popup_title {
+            font-size: 22px;
+            letter-spacing: -0.44px;
+        }
+        .popup_header .close {
+            width: 24px;
+            margin-top: 5px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+        .popup_header .close {
+            width: 18px;
+        }
+    }
+    @media screen and (max-width: 767px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+        .popup_header .close {
+            width: 18px;
+        }
+    }
+    .popup_body2 {
+        box-sizing: border-box;
+        position: relative;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-width:thin;
+    }
+    .popup_body2::-webkit-scrollbar {width: 5px;height: 5px;}
+    .popup_body2::-webkit-scrollbar-button {width: 0;height: 0;}
+    .popup_body2::-webkit-scrollbar-thumb {background: #7147a9;border: 0 none #ffffff;border-radius: 0;}
+    .popup_body2::-webkit-scrollbar-thumb:hover {background: #7147a9;}
+    .popup_body2::-webkit-scrollbar-thumb:active {background: #7147a9;}
+    .popup_body2::-webkit-scrollbar-track {background: #f8f8f8;border: 0 none #ffffff;border-radius: 0;}
+    .popup_body2::-webkit-scrollbar-track:hover {background: #f8f8f8;}
+    .popup_body2::-webkit-scrollbar-track:active {background: #f8f8f8;}
+    .popup_body2::-webkit-scrollbar-corner {background: transparent;}
+
+    .popup_body2 .divide_desc {
+        font-family: notokr-medium, sans-serif;
+    }
+
+    @media screen and (min-width: 1240px){
+        .popup_body2{
+            padding: 35px 40px;
+            height: 500px;
+        }
+        .popup_body2 .divide_desc {
+            font-size : 16px;
+            color: #7147a9;
+            letter-spacing: -0.32px;
+            margin-bottom: 20px;
+        }
+    }
+    @media screen and (max-width: 1239px) and (min-width: 768px){
+        .popup_body2{
+            padding: 27px 20px;
+        }
+        .popup_body2 .divide_desc {
+            font-size : 16px;
+            color: #7147a9;
+            letter-spacing: -0.32px;
+            margin-bottom: 15px;
+        }
+    }
+    @media screen and (max-width: 767px){
+        .popup_body2{
+            padding: 27px 20px;
+            max-height: 80vh;
+        }
+        .popup_body2 .divide_desc {
+            font-size : 16px;
+            color: #7147a9;
+            letter-spacing: -0.32px;
+            margin-bottom: 15px;
+        }
+    }
+</style>
+<style>
+
+    .input_chk input{
+        cursor: pointer;
+    }
+    .myinfo_title{ margin: 24px 0 14px; font-size: 14px; font-weight: normal; font-family: 'notokr-medium',Sans-Serif;}
+    .myinfo_box.int_id, .myinfo_box.int_id input { background: #fff; outline: 0; }
+    .myinfo_box {
+        display: block;
+        position: relative;
+        width: 100%;
+        height: 51px;
+        border: solid 1px #cccccc;
+        padding: 10px 14px 10px 14px;
+        background: #fff;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        vertical-align: top;
+    }
+    .int[disabled=disabled] { background-color: #f8f8f8; cursor: inherit;}
+    @media screen and (min-width: 1240px) {
+        #join_form{
+            padding-top: 40px !important;
+        }
+    }
+    @media screen and (max-width: 1239px) and (min-width: 768px){
+        #join_form{
+            width: 100% !important;
+            padding-top: 40px !important;
+        }
+    }
+    @media screen and (max-width: 767px){
+        #join_form {
+        }
+    }
+    .button_group {font-size: 0;}
+    .button_group .cancel {font-size: 14px; color : #ffffff; background: #cccccc; border: 1px solid #cccccc; width: 50%; line-height: 54px; height: 54px;}
+    .button_group .continue {font-size: 14px; color: #ffffff; background: #7147a9; border : 1px solid #7147a9; width: 50%; line-height: 54px; height: 54px;}
+
+    .warning {
+        margin-top : 20px;
+        font-size : 14px;
+        font-weight: bold;
+    }
+    .warning .goMyPage {
+        text-decoration : underline;
+        color : #7147a9;
+        margin-left : 5px;
+        cursor : pointer;
+    }
+
+    /*#info_table {*/
+    /*    width: 100%;*/
+    /*    border-top: 2px solid black;*/
+    /*    border-bottom: 1px solid black;*/
+    /*    border-collapse: collapse;*/
+    /*    font-size : 14px;*/
+    /*    margin-top : 24px;*/
+    /*}*/
+    /*#info_table tr {*/
+    /*    border-bottom : 1px solid #cccccc;*/
+    /*}*/
+    /*#info_table td:not(:nth-child(2n)) {border-right : 1px solid #cccccc;}*/
+    /*#info_table td {padding : 10px;}*/
+
+
+
+    @media screen and (max-width: 1239px) {
+        .enroll_table_panel {
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid #232323;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 16px 10px;
+            margin-top: 20px;
+        }
+
+        .enroll_table_panel #enroll_info_table {
+            width: 100%;
+        }
+
+        .enroll_table_panel #enroll_info_table .desc {
+            font-family: notokr-regular, sans-serif;
+            font-size: 14px;
+            letter-spacing: -0.28px;
+            line-height: 33px;
+            font-weight: normal;
+            color: #888888;
+            width: 90px;
+            text-align: left;
+        }
+
+        .enroll_table_panel #enroll_info_table td {
+            font-family: notokr-regular, sans-serif;
+            font-size: 14px;
+            letter-spacing: -0.28px;
+            line-height: 33px;
+            color: #232323;
+            text-align: left;
+        }
+    }
+    @media screen and (min-width: 1240px) {
+        .enroll_table_panel {
+            width: 100%;
+            box-sizing: border-box;
+            border-top: 1px solid #232323;
+            border-bottom: 1px solid #e5e5e5;
+            padding: 16px 10px;
+            margin-top: 20px;
+        }
+
+        .enroll_table_panel #enroll_info_table {
+            width: 100%;
+        }
+
+        .enroll_table_panel #enroll_info_table .desc {
+            font-family: notokr-regular, sans-serif;
+            font-size: 14px;
+            letter-spacing: -0.28px;
+            line-height: 33px;
+            font-weight: normal;
+            color: #888888;
+            width: 105px;
+            text-align: left;
+        }
+
+        .enroll_table_panel #enroll_info_table td {
+            font-family: notokr-regular, sans-serif;
+            font-size: 14px;
+            letter-spacing: -0.28px;
+            line-height: 33px;
+            color: #232323;
+            text-align: left;
+        }
+    }
+
+
+
+</style>
+
+<div id="enroll_confirm_popup_dim" class="dim" data-lia-popup="#enroll_confirm_popup"></div>
+<div id="enroll_confirm_popup" class="enroll_confirm_popup popup" data-lia-dim="#enroll_confirm_popup_dim">
+
+    <div id="enroll_confirm_popup_area" class="mbskin">
+
+        <div class="popup_header">
+            <span class="popup_title">필요 증빙 서류 제출</span>
+            <img class="right close" src="/res/home/img/stop/common/btn_close.png" alt="닫기">
+        </div>
+
+        <div class="popup_body2">
+            <div class="divide_desc">추가 정보</div>
+            <div class="enroll_table_panel">
+                <table id="enroll_info_table">
+                    <tr>
+                        <th class="desc">이름</th>
+                        <td class="usrname"></td>
+                    </tr>
+                    <tr>
+                        <th class="desc">기관명</th>
+                        <td class="usrcn"></td>
+                    </tr>
+                    <tr>
+                        <th class="desc">기관 내 직위</th>
+                        <td class="usrposition"></td>
+                    </tr>
+                    <tr>
+                        <th class="desc">기관 주소</th>
+                        <td class="usrcadd"></td>
+                    </tr>
+                    <tr>
+                        <th class="desc">기관 연락처</th>
+                        <td class="usrctel"></td>
+                    </tr>
+                    <tr>
+                        <th class="desc">기관 유형</th>
+                        <td class="usrctype"></td>
+                    </tr>
+
+                </table>
+            </div>
+
+
+            <p class="warning">본인의 정보가 최신이 아닙니까?<span class="goMyPage">여기를 클릭하세요.</span></p>
+
+            <form id="join_form">
+                <ul class="terms_bx_list divide">
+                    <div class="divide_desc">약관</div>
+<!--                    <li class="terms_bx">-->
+<!--                                <span class="input_chk">-->
+<!--                                    <input type="checkbox" id="termsPrivacy" name="termsPrivacy" class="chk common_checkbox">-->
+<!--                                    <label for="termsPrivacy" class="collect_personal">개인정보 수집 및 이용에 대한 취급방침동의<span class="terms_choice">(필수)</span></label>-->
+<!--                                </span>-->
+<!--                        <div class="terms_box" tabindex="0" id="divPrivacy">-->
+<!--                            <div class="article">-->
+<!--                                <h3 class="article__title">개인정보의 수집 및 이용목적</h3>-->
+<!--                                <p class="article__text">-->
+<!--                                    한국여성인권진흥원 「2020년 제3기 성매매방지 상담원 양성교육 과정」사업에 관련한 지원과 서비스 제공 및 개선-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <div class="article">-->
+<!--                                <h3 class="article__title">개인정보의 보유 및 이용기간</h3>-->
+<!--                                <p class="article__text">-->
+<!--                                    이용기간 : 해당 지원과 서비스가 제공되는 기간<br/>-->
+<!--                                    보유기간 : 10년(행정업무의 참고 또는 사실 증명을 위하여 1년 이상 10년 미만의 기간 동안 보존할 필요가 있는 개인정보 파일)-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <div class="article">-->
+<!--                                <h3 class="article__title">수집하는 기본 개인정보 항목</h3>-->
+<!--                                <p class="article__text">-->
+<!--                                    성명, 생년월일, 주소(해당시), 소속, 직위, 경력, 연락처, 휴대전화번호, 전자우편주소-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                            <div class="article">-->
+<!--                                <h3 class="article__title">동의 거부 권리 및 동의 거부에 따른 제한사항</h3>-->
+<!--                                <p class="article__text">-->
+<!--                                    귀하는 개인정보 제공 및 동의를 거부할 권리가 있으며, 위 항목 동의 거부 시 한국여성인권진흥원의 지원 및 관련 서비스 이용이 어려워질 수 있습니다.-->
+<!--                                </p>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </li>-->
+                </ul>
+            </form>
+        </div>
+        <div class="button_group">
+            <button class="cancel">취소</button>
+            <button class="continue">확인</button>
+        </div>
+
+    </div>
+</div>

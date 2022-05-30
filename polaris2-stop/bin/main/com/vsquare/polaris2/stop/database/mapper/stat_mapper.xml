@@ -1,0 +1,1046 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vsquare.polaris2.stop.database.mapper.StatMapper">
+
+
+	<select id="selectCourseEnrollmentCount" resultType="Long">
+		SELECT
+			COUNT(*)
+		FROM
+		 <if test="history_year == null">
+			 TB_COURSE_ENROLLMENT A
+			 INNER JOIN TB_USER B
+			 ON B.idx = A.student_user_idx
+		 </if>
+		<if test="history_year != null">
+			TB_COURSE_ENROLLMENT_HISTORY A
+			INNER JOIN TB_USER_HISTORY B
+			ON B.idx = A.student_user_idx AND A.history_year = B.history_year AND B.history_year = #{history_year}
+		</if>
+		INNER JOIN TB_COURSE D
+		ON D.id = A.course_id
+		INNER JOIN TB_COURSE_CONTENT COURSE_CONTENT
+		ON COURSE_CONTENT.id = D.course_content_id
+		INNER JOIN TB_COURSE_CODE COURSE_CODE
+		ON COURSE_CODE.id = COURSE_CONTENT.course_code_id
+		INNER JOIN TB_TERM E
+		ON E.id = D.term_id
+		INNER JOIN TB_INSTITUTION F
+		ON F.id = E.institution_id
+		<if test="search_option_list != null">
+			LEFT OUTER JOIN TB_USER H
+			ON H.idx = A.academic_advisor_user_idx
+		</if>
+		<if test="curriculum_institution_id != null or curriculum_id != null">
+			INNER JOIN TB_COURSE_CONTENT J
+			ON J.id = D.course_content_id
+			INNER JOIN
+			(
+			SELECT
+			KA.course_code_id AS curriculum_course_code_id,
+			KB.type_code AS curriculum_item_type_code
+			FROM TB_CURRICULUM_ITEM_COURSE_CODE KA
+			INNER JOIN TB_CURRICULUM_ITEM KB
+			ON KB.id = KA.curriculum_item_id
+			INNER JOIN TB_CURRICULUM KC
+			ON KC.id = KB.curriculum_id
+			WHERE 1 = 1
+			<if test="curriculum_institution_id != null">
+				AND KC.institution_id = #{curriculum_institution_id}
+			</if>
+			<if test="curriculum_id != null">
+				AND KC.id = #{curriculum_id}
+			</if>
+			) K
+			ON K.curriculum_course_code_id = J.course_code_id AND K.curriculum_item_type_code = D.curriculum_item_type_code
+		</if>
+		<if test="is_course_student_group_member != null">
+			LEFT OUTER JOIN
+			(
+			SELECT
+			SGA.course_id,
+			SGB.student_user_idx
+			FROM TB_STUDENT_GROUP SGA
+			INNER JOIN TB_STUDENT_GROUP_MEMBER SGB
+			ON SGB.group_id = SGA.id
+			WHERE SGA.course_task_id IS NULL
+			) SG
+			ON SG.course_id = A.course_id AND SG.student_user_idx = A.student_user_idx
+		</if>
+		<if test="is_completed != null">
+
+			<if test="history_year == null">
+				LEFT OUTER JOIN TB_STUDENT_REPORT U
+				ON U.course_id = A.course_id AND U.student_user_idx = A.student_user_idx
+			</if>
+			<if test="history_year != null">
+				LEFT OUTER JOIN TB_STUDENT_REPORT_HISTORY U
+				ON U.course_id = A.course_id AND U.student_user_idx = A.student_user_idx AND U.history_year = #{history_year}
+			</if>
+
+		</if>
+		<choose>
+			<when test="select_mode.code == 1">
+			</when>
+			<when test="select_mode.code == 2">
+				INNER JOIN TB_INSTITUTION_ADMINISTRATOR Z
+				ON Z.institution_id = F.id AND Z.admin_user_idx = #{select_mode_user_idx}
+			</when>
+			<when test="select_mode.code == 3">
+				<choose>
+					<when test="is_term_operating_organization_admin == 0">
+					</when>
+					<otherwise>
+						INNER JOIN TB_ORGANIZATION_ADMINISTRATOR Z
+						ON E.organization_id = Z.organization_id AND Z.admin_user_idx = #{select_mode_user_idx}
+					</otherwise>
+				</choose>
+			</when>
+			<when test="select_mode.code == 4">
+				INNER JOIN TB_COURSE_ADMINISTRATOR Z
+				ON Z.course_id = A.course_id AND Z.admin_user_idx = #{select_mode_user_idx}
+			</when>
+			<when test="select_mode.code == 5">
+				INNER JOIN TB_COURSE_DEPARTMENT_MAPPING ZA
+				ON ZA.course_id = A.course_id
+				INNER JOIN TB_DEPARTMENT ZB
+				ON ZB.id = ZA.department_id AND ZA.type_code = 1
+				INNER JOIN TB_DEPARTMENT_ADMINISTRATOR ZC
+				ON ZC.department_id = ZB.id AND ZC.admin_user_idx = #{select_mode_user_idx}
+			</when>
+		</choose>
+		<if test="course_task_id != null">
+			INNER JOIN TB_COURSE_TASK_TARGET CT
+			ON CT.student_user_idx = A.student_user_idx AND CT.course_task_id = #{course_task_id}
+		</if>
+		WHERE 1 = 1
+		<if test="course_category_id_list != null">
+			AND COURSE_CODE.category_id IN
+			(
+			<foreach collection="course_category_id_list" item="course_category_id" separator=",">
+				#{course_category_id}
+			</foreach>
+			)
+		</if>
+		<if test="select_mode.code == 3 and is_term_operating_organization_admin == 0">
+			AND B.organization_id = #{student_organization_id}
+		</if>
+		<if test="student_user_idx != null">
+			AND A.student_user_idx = #{student_user_idx}
+		</if>
+		<if test="student_type_code != null">
+			AND B.student_type_code = #{student_type_code}
+		</if>
+		<if test="department_id != null">
+			AND B.department_id = #{department_id}
+		</if>
+		<if test="course_id != null">
+			AND A.course_id = #{course_id}
+		</if>
+		<if test="course_exclude_from_statistics != null">
+			AND D.exclude_from_statistics = #{course_exclude_from_statistics}
+		</if>
+		<if test="status_code != null">
+			AND A.status_code = #{status_code}
+		</if>
+		<if test="unenroll_request_status_code != null">
+			AND A.unenroll_request_status_code = #{unenroll_request_status_code}
+		</if>
+		<if test="is_prepared != null">
+			AND A.is_prepared = #{is_prepared}
+		</if>
+		<if test="is_course_student_group_member != null">
+			<choose>
+				<when test="is_course_student_group_member == 0">
+					AND SG.student_user_idx IS NULL
+				</when>
+				<otherwise>
+					AND SG.student_user_idx IS NOT NULL
+				</otherwise>
+			</choose>
+		</if>
+		<if test="is_completed != null">
+			<choose>
+				<when test="is_completed == 1">
+					AND (U.course_completion_status_code IS NOT NULL AND U.course_completion_status_code = 2)
+				</when>
+				<otherwise>
+					AND (U.course_completion_status_code IS NULL OR U.course_completion_status_code != 2)
+				</otherwise>
+			</choose>
+		</if>
+		<if test="study_material_delivery_status_code_list != null">
+			AND A.study_material_delivery_status_code IN
+			(
+			<foreach collection="study_material_delivery_status_code_list" item="study_material_delivery_status_code"
+					 separator=",">
+				#{study_material_delivery_status_code}
+			</foreach>
+			)
+		</if>
+		<choose>
+			<when test="academic_advisor_assigned == null">
+			</when>
+			<otherwise>
+				<choose>
+					<when test="academic_advisor_assigned == 0">
+						AND A.academic_advisor_user_idx IS NULL
+					</when>
+					<otherwise>
+						AND A.academic_advisor_user_idx IS NOT NULL
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="academic_advisor_user_idx_list != null">
+			AND A.academic_advisor_user_idx IN
+			<foreach collection="academic_advisor_user_idx_list" item="academic_advisor_user_idx" open="(" close=")"
+					 separator=",">
+				#{academic_advisor_user_idx}
+			</foreach>
+		</if>
+		<if test="institution_id != null">
+			AND E.institution_id = #{institution_id}
+		</if>
+		<choose>
+			<when test="organization_id == null">
+			</when>
+			<otherwise>
+				<choose>
+					<when test="organization_id > 0">
+						AND E.organization_id = #{organization_id}
+					</when>
+					<when test="organization_id == 0">
+						AND E.organization_id IS NOT NULL
+					</when>
+					<otherwise>
+						AND E.organization_id IS NULL
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="term_type_code != null">
+			AND E.type_code = #{term_type_code}
+		</if>
+		<if test="term_year != null">
+			AND E.year = #{term_year}
+		</if>
+		<if test="term_id != null">
+			AND E.id = #{term_id}
+		</if>
+		<if test="course_year != null">
+			AND D.year = #{course_year}
+		</if>
+		<if test="search_option_list != null">
+			<foreach collection="search_option_list" item="search_option">
+				<if test="search_option.code == 1">
+					AND B.id LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 2">
+					AND B.name LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 3">
+					AND D.service_title LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 4">
+					AND H.id LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 5">
+					AND H.name LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 6">
+					AND B.receive_email = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 7">
+					AND B.receive_text_message = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 8">
+					AND B.receive_push_message = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 9">
+					AND B.email LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 10">
+					AND B.number LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 11">
+					AND EXTRACT(YEAR FROM D.start_date) = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 12">
+					AND EXTRACT(MONTH FROM D.start_date) = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 13">
+					AND DATE_FORMAT(D.start_date, '%Y-%m-%d %H:%i:%s') &gt;= STR_TO_DATE(#{search_option.keyword}, '%Y-%m-%d %H:%i:%s')
+				</if>
+				<if test="search_option.code == 14">
+					AND DATE_FORMAT(D.start_date, '%Y-%m-%d %H:%i:%s') &lt;= STR_TO_DATE(#{search_option.keyword}, '%Y-%m-%d %H:%i:%s')
+				</if>
+				<if test="search_option.code == 1000">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.category_code in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.category_code = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1001">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE C_ATTR.value in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE C_ATTR.value = #{search_option.keyword}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1002">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.name in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.name = #{search_option.keyword}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1003">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					<if test="search_option.keywordList != null">
+						WHERE C_ATTR.attribute_id in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE C_ATTR.attribute_id = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1004">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.parent_id IN
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.parent_id = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 2000">
+					AND A.student_user_idx IN
+					<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+						#{keyword}
+					</foreach>
+				</if>
+				<if test="search_option.code == 3000">
+					AND A.student_user_idx IN
+					(
+					SELECT
+					UP.user_idx
+					FROM TB_USER_PROPERTY UP
+					<if test="search_option.keywordList != null">
+						WHERE UP.name in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE UP.name = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND UP.value LIKE CONCAT('%', #{search_option.property}, '%')
+					</if>
+					)
+				</if>
+			</foreach>
+		</if>
+	</select>
+
+
+	<select id="selectCourseEnrollmentSummaryList" resultMap="com.vsquare.polaris2.core.model.learning.courseEnrollmentSummaryResultMap">
+		SELECT
+		A.course_id,
+		A.student_user_idx,
+
+		B.id AS student_user_id,
+		B.name AS student_user_name,
+		IF(B.gender_code IS NULL, 4, B.gender_code) AS student_user_gender_code,
+		B.employment_status_code AS student_user_employment_status_code,
+		B.company_name AS student_user_company_name,
+		B.date_of_birth AS student_user_date_of_birth,
+		B.email AS student_user_email,
+		B.student_type_code AS student_user_student_type_code,
+		B.number AS student_user_number,
+		B.year AS student_user_year,
+		B.department_id AS student_user_department_id,
+		B.address_1 AS student_user_address_1,
+		B.address_2 AS student_user_address_2,
+		B.postcode AS student_user_postcode,
+		B.other_address_1 AS student_user_other_address_1,
+		B.other_address_2 AS student_user_other_address_2,
+		B.other_postcode AS student_user_other_postcode,
+		B.mobile_phone_number AS student_user_mobile_phone_number,
+		B.status_code AS student_user_status_code,
+		B.receive_email AS student_user_receive_email,
+		B.receive_text_message AS student_user_receive_text_message,
+		B.receive_push_message AS student_user_receive_push_message,
+		B.receive_other_message AS student_user_receive_other_message,
+
+		A.status_code,
+		A.enrollment_count,
+		A.study_material_delivery_status_code,
+		A.study_material_delivery_status_last_modified_date,
+		A.auditing_start_date,
+		A.auditing_end_date,
+
+		A.courseware_homepage_url,
+		A.unenroll_url,
+		A.certificate_url,
+		A.is_repeated,
+		A.is_prepared,
+
+		A.unenroll_request_status_code,
+		A.unenroll_requested_by_user_idx,
+		B1.id AS unenroll_requested_by_user_id,
+		B1.name AS unenroll_requested_by_user_name,
+		B1.role_code AS unenroll_requested_by_user_role_code,
+		A.unenroll_requested_from_country,
+		A.unenroll_requested_from_ip_address,
+		A.unenroll_requested_from_device_type_code,
+		A.unenroll_requested_date,
+		A.unenroll_request_approved_by_user_idx,
+		B2.id AS unenroll_request_approved_by_user_id,
+		B2.name AS unenroll_request_approved_by_user_name,
+		B2.role_code AS unenroll_request_approved_by_user_role_code,
+		A.unenroll_request_approved_from_country,
+		A.unenroll_request_approved_from_ip_address,
+		A.unenroll_request_approved_from_device_type_code,
+		A.unenroll_request_approved_date,
+
+		IF(U.total_learning_time_in_seconds IS NULL, 0, U.total_learning_time_in_seconds) AS total_learning_time_in_seconds,
+		IF(U.learning_progress IS NULL, 0, U.learning_progress) AS learning_progress,
+		IF(U.course_completion_status_code IS NULL, 0, IF(U.course_completion_status_code = 2, 1, 0)) AS is_completed,
+
+		U.completion_date AS completion_date,
+
+		F.id AS institution_id,
+		F.code AS institution_code,
+		F.name AS institution_name,
+		G.id AS organization_id,
+		G.name AS organization_name,
+		E.id AS term_id,
+		E.type_code AS term_type_code,
+		E.curriculum_id AS term_curriculum_id,
+		E.year AS term_year,
+		E.number AS term_number,
+		E.name AS term_name,
+		COURSE_CATEGORY.id AS course_category_id,
+		COURSE_CATEGORY.code AS course_category_code,
+		COURSE_CATEGORY.name AS course_category_name,
+		D.service_title AS course_service_title,
+		D.study_time_in_hours AS course_study_time_in_hours,
+		D.study_time_in_minutes AS course_study_time_in_minutes,
+		D.study_time_in_seconds AS course_study_time_in_seconds,
+		D.operation_code AS course_operation_code,
+		D.start_date AS course_start_date,
+		D.end_date AS course_end_date,
+		D.study_days AS course_study_days,
+		D.review_start_date AS course_review_start_date,
+		D.review_end_date AS course_review_end_date,
+		D.review_days AS course_review_days,
+		D.offer_certificate AS course_offer_certificate,
+		D.provide_additional_study_material AS course_provide_additional_study_material,
+
+		<if test="include_course_properties == 1">
+			D.properties AS course_properties,
+		</if>
+
+		D.exclude_from_statistics AS course_exclude_from_statistics,
+
+
+
+		H.idx AS academic_advisor_user_idx,
+		H.id AS academic_advisor_user_id,
+		H.name AS academic_advisor_user_name,
+		H.email AS academic_advisor_user_email,
+		A.academic_advisor_assigned_date,
+
+		A.properties,
+
+		A.registered_date,
+		A.last_modified_date
+		FROM
+		<if test="history_year == null">
+			TB_COURSE_ENROLLMENT A
+			INNER JOIN TB_USER B
+			ON B.idx = A.student_user_idx
+		</if>
+		<if test="history_year != null">
+			TB_COURSE_ENROLLMENT_HISTORY A
+			INNER JOIN TB_USER_HISTORY B
+			ON B.idx = A.student_user_idx AND A.history_year = B.history_year AND B.history_year = #{history_year}
+		</if>
+		LEFT OUTER JOIN TB_USER B1
+		ON B1.idx = A.unenroll_requested_by_user_idx
+		LEFT OUTER JOIN TB_USER B2
+		ON B2.idx = A.unenroll_request_approved_by_user_idx
+		INNER JOIN TB_COURSE D
+		ON D.id = A.course_id
+		LEFT OUTER JOIN
+		(
+		SELECT
+		LESSON_COUNT_A.course_id,
+		COUNT(*) AS course_lesson_count
+		FROM TB_COURSE_LEARNING_CONTENT LESSON_COUNT_A
+		WHERE LESSON_COUNT_A.is_available = 1
+		AND LESSON_COUNT_A.type_code IN (10, 11, 12, 13)
+		GROUP BY LESSON_COUNT_A.course_id
+		ORDER BY NULL
+		) LESSON_COUNT
+		ON LESSON_COUNT.course_id = D.id
+		INNER JOIN TB_COURSE_CONTENT COURSE_CONTENT
+		ON COURSE_CONTENT.id = D.course_content_id
+		INNER JOIN TB_COURSE_CODE COURSE_CODE
+		ON COURSE_CODE.id = COURSE_CONTENT.course_code_id
+		LEFT OUTER JOIN TB_COURSE_CATEGORY COURSE_CATEGORY
+		ON COURSE_CATEGORY.id = COURSE_CODE.category_id
+		INNER JOIN TB_TERM E
+		ON E.id = D.term_id
+		INNER JOIN TB_INSTITUTION F
+		ON F.id = E.institution_id
+		LEFT OUTER JOIN TB_ORGANIZATION G
+		ON G.id = E.organization_id
+		LEFT OUTER JOIN TB_USER H
+		ON H.idx = A.academic_advisor_user_idx
+		<if test="curriculum_institution_id != null or curriculum_id != null">
+			INNER JOIN TB_COURSE_CONTENT J
+			ON J.id = D.course_content_id
+			INNER JOIN
+			(
+			SELECT
+			KA.course_code_id AS curriculum_course_code_id,
+			KB.type_code AS curriculum_item_type_code
+			FROM TB_CURRICULUM_ITEM_COURSE_CODE KA
+			INNER JOIN TB_CURRICULUM_ITEM KB
+			ON KB.id = KA.curriculum_item_id
+			INNER JOIN TB_CURRICULUM KC
+			ON KC.id = KB.curriculum_id
+			WHERE 1 = 1
+			<if test="curriculum_institution_id != null">
+				AND KC.institution_id = #{curriculum_institution_id}
+			</if>
+			<if test="curriculum_id != null">
+				AND KC.id = #{curriculum_id}
+			</if>
+			) K
+			ON K.curriculum_course_code_id = J.course_code_id AND K.curriculum_item_type_code = D.curriculum_item_type_code
+		</if>
+		<if test="is_course_student_group_member != null">
+			LEFT OUTER JOIN
+			(
+			SELECT
+			SGA.course_id,
+			SGB.student_user_idx
+			FROM TB_STUDENT_GROUP SGA
+			INNER JOIN TB_STUDENT_GROUP_MEMBER SGB
+			ON SGB.group_id = SGA.id
+			WHERE SGA.course_task_id IS NULL
+			) SG
+			ON SG.course_id = A.course_id AND SG.student_user_idx = A.student_user_idx
+		</if>
+
+		<if test="history_year == null">
+			LEFT OUTER JOIN TB_STUDENT_REPORT U
+			ON U.course_id = A.course_id AND U.student_user_idx = A.student_user_idx
+		</if>
+		<if test="history_year != null">
+			LEFT OUTER JOIN TB_STUDENT_REPORT_HISTORY U
+			ON U.course_id = A.course_id AND U.student_user_idx = A.student_user_idx AND U.history_year = #{history_year}
+		</if>
+
+		<choose>
+			<when test="select_mode.code == 1">
+			</when>
+			<when test="select_mode.code == 2">
+				INNER JOIN TB_INSTITUTION_ADMINISTRATOR Z
+				ON F.id = Z.institution_id AND Z.admin_user_idx = #{select_mode_user_idx}
+			</when>
+			<when test="select_mode.code == 3">
+				<choose>
+					<when test="is_term_operating_organization_admin == 0">
+					</when>
+					<otherwise>
+						INNER JOIN TB_ORGANIZATION_ADMINISTRATOR Z
+						ON G.id = Z.organization_id AND Z.admin_user_idx = #{select_mode_user_idx}
+					</otherwise>
+				</choose>
+			</when>
+			<when test="select_mode.code == 4">
+				INNER JOIN TB_COURSE_ADMINISTRATOR Z
+				ON Z.course_id = A.course_id AND Z.admin_user_idx = #{select_mode_user_idx}
+			</when>
+			<when test="select_mode.code == 5">
+				INNER JOIN TB_COURSE_DEPARTMENT_MAPPING ZA
+				ON ZA.course_id = A.course_id
+				INNER JOIN TB_DEPARTMENT ZB
+				ON ZB.id = ZA.department_id AND ZA.type_code = 1
+				INNER JOIN TB_DEPARTMENT_ADMINISTRATOR ZC
+				ON ZC.department_id = ZB.id AND ZC.admin_user_idx = #{select_mode_user_idx}
+			</when>
+		</choose>
+		<if test="course_task_id != null">
+			INNER JOIN TB_COURSE_TASK_TARGET CT
+			ON CT.student_user_idx = A.student_user_idx AND CT.course_task_id = #{course_task_id}
+		</if>
+		WHERE 1 = 1
+		<if test="course_category_id_list != null">
+			AND COURSE_CODE.category_id IN
+			(
+			<foreach collection="course_category_id_list" item="course_category_id" separator=",">
+				#{course_category_id}
+			</foreach>
+			)
+		</if>
+		<if test="select_mode.code == 3 and is_term_operating_organization_admin == 0">
+			AND B.organization_id = #{student_organization_id}
+		</if>
+		<if test="student_user_idx != null">
+			AND A.student_user_idx = #{student_user_idx}
+		</if>
+		<if test="student_type_code != null">
+			AND B.student_type_code = #{student_type_code}
+		</if>
+		<if test="department_id != null">
+			AND B.department_id = #{department_id}
+		</if>
+		<if test="course_id != null">
+			AND A.course_id = #{course_id}
+		</if>
+		<if test="course_exclude_from_statistics != null">
+			AND D.exclude_from_statistics = #{course_exclude_from_statistics}
+		</if>
+		<if test="status_code != null">
+			AND A.status_code = #{status_code}
+		</if>
+		<if test="unenroll_request_status_code != null">
+			AND A.unenroll_request_status_code = #{unenroll_request_status_code}
+		</if>
+		<if test="is_prepared != null">
+			AND A.is_prepared = #{is_prepared}
+		</if>
+		<if test="is_course_student_group_member != null">
+			<choose>
+				<when test="is_course_student_group_member == 0">
+					AND SG.student_user_idx IS NULL
+				</when>
+				<otherwise>
+					AND SG.student_user_idx IS NOT NULL
+				</otherwise>
+			</choose>
+		</if>
+		<if test="is_completed != null">
+			<choose>
+				<when test="is_completed == 1">
+					AND (U.course_completion_status_code IS NOT NULL AND U.course_completion_status_code = 2)
+				</when>
+				<otherwise>
+					AND (U.course_completion_status_code IS NULL OR U.course_completion_status_code != 2)
+				</otherwise>
+			</choose>
+		</if>
+		<if test="study_material_delivery_status_code_list != null">
+			AND A.study_material_delivery_status_code IN
+			(
+			<foreach collection="study_material_delivery_status_code_list" item="study_material_delivery_status_code"
+					 separator=",">
+				#{study_material_delivery_status_code}
+			</foreach>
+			)
+		</if>
+		<choose>
+			<when test="academic_advisor_assigned == null">
+			</when>
+			<otherwise>
+				<choose>
+					<when test="academic_advisor_assigned == 0">
+						AND A.academic_advisor_user_idx IS NULL
+					</when>
+					<otherwise>
+						AND A.academic_advisor_user_idx IS NOT NULL
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="academic_advisor_user_idx_list != null">
+			AND A.academic_advisor_user_idx IN
+			<foreach collection="academic_advisor_user_idx_list" item="academic_advisor_user_idx" open="(" close=")"
+					 separator=",">
+				#{academic_advisor_user_idx}
+			</foreach>
+		</if>
+		<if test="institution_id != null">
+			AND E.institution_id = #{institution_id}
+		</if>
+		<choose>
+			<when test="organization_id == null">
+			</when>
+			<otherwise>
+				<choose>
+					<when test="organization_id > 0">
+						AND E.organization_id = #{organization_id}
+					</when>
+					<when test="organization_id == 0">
+						AND E.organization_id IS NOT NULL
+					</when>
+					<otherwise>
+						AND E.organization_id IS NULL
+					</otherwise>
+				</choose>
+			</otherwise>
+		</choose>
+		<if test="term_type_code != null">
+			AND E.type_code = #{term_type_code}
+		</if>
+		<if test="term_year != null">
+			AND E.year = #{term_year}
+		</if>
+		<if test="term_id != null">
+			AND E.id = #{term_id}
+		</if>
+		<if test="course_year != null">
+			AND D.year = #{course_year}
+		</if>
+		<if test="search_option_list != null">
+			<foreach collection="search_option_list" item="search_option">
+				<if test="search_option.code == 1">
+					AND B.id LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 2">
+					AND B.name LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 3">
+					AND D.service_title LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 4">
+					AND H.id LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 5">
+					AND H.name LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 6">
+					AND B.receive_email = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 7">
+					AND B.receive_text_message = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 8">
+					AND B.receive_push_message = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 9">
+					AND B.email LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 10">
+					AND B.number LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 11">
+					AND EXTRACT(YEAR FROM D.start_date) = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 12">
+					AND EXTRACT(MONTH FROM D.start_date) = #{search_option.keyword}
+				</if>
+				<if test="search_option.code == 13">
+					AND DATE_FORMAT(D.start_date, '%Y-%m-%d %H:%i:%s') &gt;= STR_TO_DATE(#{search_option.keyword}, '%Y-%m-%d %H:%i:%s')
+				</if>
+				<if test="search_option.code == 14">
+					AND DATE_FORMAT(D.start_date, '%Y-%m-%d %H:%i:%s') &lt;= STR_TO_DATE(#{search_option.keyword}, '%Y-%m-%d %H:%i:%s')
+				</if>
+				<if test="search_option.code == 15">
+					AND D.operation_code LIKE CONCAT('%', #{search_option.keyword}, '%')
+				</if>
+				<if test="search_option.code == 1000">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.category_code in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.category_code = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1001">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE C_ATTR.value in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE C_ATTR.value = #{search_option.keyword}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1002">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.name in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.name = #{search_option.keyword}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1003">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					<if test="search_option.keywordList != null">
+						WHERE C_ATTR.attribute_id in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE C_ATTR.attribute_id = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 1004">
+					AND D.id IN
+					(
+					SELECT
+					C_ATTR.course_id
+					FROM TB_COURSE_ATTRIBUTE C_ATTR
+					INNER JOIN TB_ATTRIBUTE ATTR
+					ON ATTR.id = C_ATTR.attribute_id
+					<if test="search_option.keywordList != null">
+						WHERE ATTR.parent_id IN
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE ATTR.parent_id = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND C_ATTR.value = #{search_option.property}
+					</if>
+					)
+				</if>
+				<if test="search_option.code == 2000">
+					AND A.student_user_idx IN
+					<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+						#{keyword}
+					</foreach>
+				</if>
+				<if test="search_option.code == 3000">
+					AND A.student_user_idx IN
+					(
+					SELECT
+					UP.user_idx
+					FROM TB_USER_PROPERTY UP
+					<if test="search_option.keywordList != null">
+						WHERE UP.name in
+						<foreach collection="search_option.keywordList" item="keyword" open="(" close=")" separator=",">
+							#{keyword}
+						</foreach>
+					</if>
+					<if test="search_option.keywordList == null">
+						WHERE UP.name = #{search_option.keyword}
+					</if>
+					<if test="search_option.property != null">
+						AND UP.value LIKE CONCAT('%', #{search_option.property}, '%')
+					</if>
+					)
+				</if>
+			</foreach>
+		</if>
+		<if test="order_by == null">
+			ORDER BY E.type_code DESC, E.start_date DESC
+		</if>
+		<if test="order_by != null and order_by.code == 1">
+			ORDER BY B.id ASC
+		</if>
+		<if test="order_by != null and order_by.code == 2">
+			ORDER BY B.id DESC
+		</if>
+		<if test="order_by != null and order_by.code == 3">
+			ORDER BY B.name ASC, B.id ASC
+		</if>
+		<if test="order_by != null and order_by.code == 4">
+			ORDER BY B.name DESC, B.id ASC
+		</if>
+		<if test="order_by != null and order_by.code == 5">
+			ORDER BY A.registered_date ASC
+		</if>
+		<if test="order_by != null and order_by.code == 6">
+			ORDER BY A.registered_date DESC
+		</if>
+		<if test="order_by != null and order_by.code == 7">
+			ORDER BY A.last_modified_date ASC
+		</if>
+		<if test="order_by != null and order_by.code == 8">
+			ORDER BY A.last_modified_date DESC
+		</if>
+		<if test="order_by != null and order_by.code == 1000">
+			ORDER BY E.year DESC, E.number DESC, D.service_title ASC, G.name ASC
+		</if>
+		<if test="order_by != null and order_by.code == 2000">
+			ORDER BY E.year ASC, G.name ASC, E.number ASC, D.service_title ASC
+		</if>
+		<if test="page != null and count != null">
+			LIMIT #{page}, #{count}
+		</if>
+	</select>
+
+
+
+
+
+
+
+
+
+	<select id="selectUserPropertiesWrapperListByUserIdxList" resultMap="com.vsquare.polaris2.core.model.user.userPropertiesWrapperResultMap">
+		SELECT
+			user_idx,
+			name,
+			value
+		FROM
+		<if test="history_year == null">
+			TB_USER_PROPERTY
+			WHERE user_idx IN
+		</if>
+		<if test="history_year != null">
+			TB_USER_PROPERTY_HISTORY
+			WHERE history_year = #{history_year} AND user_idx IN
+		</if>
+		(
+		<foreach collection="user_idx_list" item="user_idx" separator=",">
+			#{user_idx}
+		</foreach>
+		)
+		ORDER BY user_idx ASC
+	</select>
+
+
+
+
+
+
+	<select id="selectCourseDetailCounts" resultType="Map">
+
+		SELECT
+			A.id AS COURSE_ID,
+		   	B.count AS STUDENT_COUNT,
+		    C.count AS COMPLETED_STUDENT_COUNT
+		FROM TB_COURSE A
+		LEFT OUTER JOIN (
+		   	SELECT
+		   	       AA.course_id, COUNT(*) as count
+		   	FROM TB_COURSE_ENROLLMENT_HISTORY AA
+		   	WHERE AA.status_code = 20 AND AA.history_year = #{history_year}
+			GROUP BY AA.course_id
+		) B ON B.course_id = A.id
+		LEFT OUTER JOIN (
+			SELECT AA.course_id, COUNT(*) as count FROM TB_COURSE_ENROLLMENT_HISTORY AA
+			LEFT OUTER JOIN TB_STUDENT_REPORT_HISTORY BB ON BB.course_id = AA.course_id AND BB.student_user_idx = AA.student_user_idx
+			WHERE AA.status_code = 20 AND AA.history_year = #{history_year} AND BB.course_completion_status_code = 2
+			GROUP BY AA.course_id
+		) C ON C.course_id = A.id
+		WHERE A.id IN (
+			<foreach collection="course_id_list" item="course_id" separator=",">
+				#{course_id}
+			</foreach>
+		)
+	</select>
+
+
+
+
+</mapper>

@@ -1,0 +1,82 @@
+<style>
+
+    .input_chk input{
+        cursor: pointer;
+    }
+
+    .article {
+        font-family: notokr-regular, sans-serif !important;
+    }
+
+    #join_form .course_sidebar_list label {display: block;position: relative; padding-left: 35px;  /*margin-bottom: 12px;*/cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+    #join_form .course_sidebar_list label input {position: absolute;opacity: 0;cursor: pointer;height: 0;width: 0;}
+    #join_form .course_sidebar_list label .checkmark {position: absolute;top: 0;left: 0;height: 20px;width: 20px;border: 1px solid #ccc;border-radius: 2px;background-color: #ffffff;-webkit-appearance: none;-moz-appearance: none;appearance: none;display: inline-block;vertical-align: middle;cursor: pointer;margin: 0;}
+
+    /* On mouse-over, add a grey background color */
+
+    /* When the checkbox is checked, add a blue background */
+    #join_form label input:checked ~ .checkmark {background-color: #7147a9;border: none;}
+
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    #join_form label .checkmark:after {content: "";position: absolute;display: none;}
+    #join_form label .checkmark.changed:after {content: "";position: absolute;display: none;}
+
+    /* Show the checkmark when checked */
+    #join_form label input:checked ~ .checkmark:after {display: block;}
+    #join_form label input:checked ~ .checkmark.changed:after {display: block;}
+    /* Style the checkmark/indicator */
+    #join_form label .checkmark:after {
+        content: " ";
+        display: block;
+        width: 7px;
+        height: 4px;
+        border-bottom: 2px solid white;
+        border-left: 2px solid white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-48%, -70%) rotate(-48deg);
+        -ms-transform: translate(-48%, -70%) rotate(-48deg);
+        transform: translate(-48%, -70%) rotate(-48deg);
+    }
+    #join_form label .checkmark.changed:after {left: 6px;top: 3px;width: 4px;height: 7px;border: solid white;border-width: 0 2px 2px 0;-webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);}
+
+</style>
+
+<div id="section" class="page_content_body user">
+
+    <div class="gray_background">
+
+        <div class="container">
+
+            <article id="join_type" class="floating_box">
+
+                <header>
+                    <h1>회원가입</h1>
+                </header>
+
+                <form id="join_form">
+<!--                            <input type="checkbox" id="chk_all" name="chk_all" class="common_checkbox" />-->
+<!--                            &lt;!&ndash; [D] ie7/8에서 checked일때 label에 클래스 on추가해주세요.  &ndash;&gt;-->
+<!--                            <label for="chk_all"><span class="chk_all_txt">이용약관 및 개인정보취급방침 모두 동의합니다.</span></label>-->
+                        <div class="course_sidebar_list">
+                            <div class="course_sidebar_list_depth1">
+                                <label><input id="chk_all" type="checkbox">이용약관 및 개인정보취급방침 모두 동의합니다.<span class="checkmark"></span></label>
+                            </div>
+                        </div>
+
+                    <ul class="terms_bx_list">
+                    </ul>
+
+                    <div class="btn_area double">
+                        <span><a href="#" id="btnCancel" class="btn_type btn_default" role="button">취소</a></span>
+                        <span><a href="#" id="btnAgree" class="btn_type btn_primary" role="button">다음</a></span>
+                    </div>
+                </form>
+            </article>
+        </div>
+
+
+    </div>
+</div>

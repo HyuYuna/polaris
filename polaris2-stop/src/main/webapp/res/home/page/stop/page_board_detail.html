@@ -1,0 +1,139 @@
+
+<style type="text/css">
+
+    .normal_view { border-top:1px solid #707070; }
+    .normal_view .normal_view_header { padding:30px;border-bottom:1px solid #e5e5e5; }
+    .normal_view .normal_view_header_title { color:#232323;font-family: notokr-medium;font-size:24px;display:inline-block;word-break: break-all; }
+    .normal_view .normal_view_header_info { color:#707070;font-family: notokr-regular;font-size:16px;margin-top:10px; }
+    .normal_view .normal_view_header_buttons {display:none;float:right;margin-bottom:10px;}
+    .normal_view .normal_view_header_buttons div {cursor:pointer; margin-left:10px;display:inline-block; color:#707070; font-size:16px; font-family: notokr-regular; }
+    .normal_view .normal_view_header_buttons div:hover { text-decoration: underline; }
+
+    .normal_view .normal_view_body { color:#232323;font-family: notokr-regular;font-size:16px;padding:50px 30px;border-bottom:1px solid #e5e5e5; }
+
+    .normal_view .normal_view_attachment {margin-top:50px;display: none;padding:30px 30px;background:#f8f8f8;position:relative;line-height:30px;}
+    .normal_view .normal_view_attachment_title { font-size:16px;line-height:30px;color:#232323;font-family: notokr-regular;position:absolute;top:25px; }
+    .normal_view .normal_view_attachment_body { padding-left:90px; }
+    .normal_view .normal_view_attachment_item { position: relative; }
+    .normal_view .normal_view_attachment_item_icon { position:absolute;top:2px; }
+    .normal_view .normal_view_attachment_item_icon img {width:14px;}
+
+    .normal_view .normal_view_attachment_item_text {padding-left:25px;padding-right:100px;color:#707070;font-size:16px;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal;overflow:hidden;cursor:pointer;font-family: notokr-regular;}
+
+    .normal_view .normal_view_attachment_item_text:hover { text-decoration: underline;}
+    .normal_view .normal_view_attachment_item_size { position:absolute;right:0;top:0;font-size:14px;color:#707070; }
+
+    .page_content_button { margin-top:50px; margin-bottom:50px; }
+
+
+    .comment_view { margin-top:50px;background-color:#f8f8f8;padding:40px 24px;display: none;}
+    .comment_view .comment_view_title { font-family: notokr-medium;font-size: 20px; color:#232323; }
+    .comment_view .comment_view_input { box-sizing: border-box;border:1px solid #707070;margin-top:30px;display: none;}
+
+    .comment_view .comment_view_input_text {padding: 28px;width: 100%;box-sizing: border-box;border: 0;resize: none;color: #232323;font-size: 14px;line-height: 24px; font-family: notokr-regular;height: 100px;border-bottom: 1px solid #e5e5e5;outline: none;display: block;border-radius: 5px 5px 0px 0px;}
+    .comment_view .comment_view_button { background:#ffffff;height: 36px; position: relative; }
+    .comment_view .comment_view_button_write { background-color: #373a5b; font-size: 14px;color:#ffffff;font-family: notokr-regular;width:68px;height:38px;line-height:38px;text-align: center;cursor:pointer; position: absolute; top:-1px; right:0; }
+    .comment_view .comment_view_list { margin-top:20px;overflow:auto;width:100%; }
+    .comment_view .comment_view_item { margin-top:30px; border-bottom: 1px solid #e5e5e5;}
+    .comment_view .comment_view_item_name { color:#6f4dbb;font-size: 20px;font-family: notokr-medium;float:left; }
+    .comment_view .comment_view_item_date { color:#707070;font-size: 16px;font-family: notokr-regular;margin-left: 20px;float:left; }
+    /*.comment_view .comment_view_item_date:hover { text-decoration: underline;}*/
+    .comment_view .comment_view_item_button_delete { color:#707070;font-family: notokr-regular;font-size:16px;float:right; cursor: pointer;}
+    .comment_view .comment_view_item_button_delete:hover { color:#232323;}
+    .comment_view .comment_view_item_body {padding-top: 10px;padding-bottom: 30px;line-height: 28px;clear: both;font-family: notokr-regular;font-size: 16px;color: #232323; }
+
+    /* Mobile */
+    @media  (max-width:767px) {
+
+        .normal_view .normal_view_header { padding:20px; }
+        .normal_view .normal_view_body { padding:20px;font-size:14px; }
+
+        .normal_view .normal_view_header_title { font-size:20px; }
+        .normal_view .normal_view_header_info { font-size:14px; }
+        .normal_view .normal_view_header_buttons { font-size:14px; }
+
+        .normal_view .normal_view_attachment_title { display:none; }
+        .normal_view .normal_view_attachment_item_text { font-size:14px;padding-right:0; }
+        .normal_view .normal_view_attachment_item_size { display:none; }
+        .normal_view .normal_view_attachment { margin-top:20px;padding:20px 25px;line-height:25px; }
+
+        .normal_view .normal_view_attachment_body { padding-left:0;}
+
+
+        .comment_view { margin-top:40px;padding:30px 20px; }
+        .comment_view .comment_view_title { font-size: 16px; }
+        .comment_view .comment_view_input { margin-top:15px }
+        .comment_view .comment_view_input_text { padding:19px 16px;}
+        .comment_view .comment_view_button { background:#ffffff;height: 34px;}
+        .comment_view .comment_view_button_write {  width:56px;height:36px;line-height:36px;font-size:14px; }
+
+        .comment_view .comment_view_list { margin-top:15px; }
+        .comment_view .comment_view_item { margin-top:25px; }
+        .comment_view .comment_view_item_name { color:#6f4dbb;font-size: 16px; }
+        .comment_view .comment_view_item_date { color:#707070;font-size: 14px;margin-left:10px; line-height: 23px; }
+        .comment_view .comment_view_item_button_delete { font-size:14px }
+        .comment_view .comment_view_item_body { padding-top:10px;line-height:24px;font-size: 14px; }
+
+
+    }
+
+    /* Tablet */
+    @media  (min-width:768px) and (max-width:1240px) {
+
+        .normal_view .normal_view_body {font-size:14px;}
+        .comment_view .comment_view_item_date {line-height: 28px;}
+    }
+
+    /* PC */
+    @media  (min-width:1240px) {
+        .comment_view .comment_view_item_date {line-height: 28px;}
+    }
+
+</style>
+
+
+<header class="page_header">
+    <div class="page_header_wrapper">
+        <h1 class="page_header_title"></h1>
+        <ul class="page_header_breadcrumb">
+        </ul>
+    </div>
+</header>
+
+<div id="section" class="page_content_body container">
+    <div class="normal_view">
+        <div class="normal_view_header">
+            <div class="normal_view_header_buttons">
+                <div class="normal_view_header_button_edit">수정</div>
+                <div class="normal_view_header_button_delete">삭제</div>
+            </div>
+            <div class="normal_view_header_title"></div>
+            <div class="normal_view_header_info"></div>
+        </div>
+        <div class="normal_view_body">
+            <div class="normal_view_content"></div>
+            <div class="normal_view_attachment">
+                <div class="normal_view_attachment_title">첨부파일</div>
+                <div class="normal_view_attachment_body"></div>
+            </div>
+        </div>
+    </div>
+    <div class="page_content_button">
+        <div class="page_content_button_list">목록</div>
+    </div>
+    <div class="comment_view">
+        <div class="comment_view_title">댓글 <span class="comment_view_count"></span></div>
+        <div class="comment_view_input"><textarea class="comment_view_input_text" placeholder="댓글을 입력해 주세요."></textarea>
+            <div class="comment_view_button">
+                <div class="comment_view_button_write">등록</div>
+            </div>
+        </div>
+        <div class="comment_view_list"></div>
+    </div>
+</div>
+
+
+
+
+
+

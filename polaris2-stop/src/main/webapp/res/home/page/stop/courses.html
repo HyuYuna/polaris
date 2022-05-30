@@ -1,0 +1,389 @@
+<style>
+    .home_card_slide .home_card_item{
+        margin-bottom: 40px;
+    }
+
+
+
+    .card_item_state {
+        position: absolute;
+        right: 16px;
+        bottom: 16px;
+        background-color: rgba(55, 58, 91, 0.4);
+        text-align: center;
+        font-size: 14px;
+        color: #ffffff;
+    }
+
+    /*개발용*/
+    /*.home_list_item {display: none}*/
+    .listv {
+        display : none;
+    }
+    .course_list_empty {
+        display: block;
+        text-align: center;
+    }
+    .course_list_empty_ico {
+        background-image: url("/res/home/img/stop/common/ico_none.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+    }
+    @media screen and (min-width:1360px) {
+        .course_list_empty_ico {
+            background-image: url("/res/home/img/stop/common/ico_none.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        .course_list_empty_desc {
+            font-size: 16px;
+            color: #888888;
+            font-family: "Noto Sans KR", "Sans-Serif";
+            letter-spacing: -0.32px;
+            margin-top: 20px;
+        }
+
+        .course_sidebar_depth2 .title {
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            display: -webkit-box;
+        }
+
+
+        /*.course_main_nav_taglist_tag {*/
+        /*    background-image: url("/res/home/img/stop/common/btn_cancel.png");*/
+        /*    background-repeat: no-repeat;*/
+        /*    background-size: 14px;*/
+        /*    background-position-y: center;*/
+        /*    background-position-x: right;*/
+        /*}*/
+    }
+    @media screen and (min-width:768px) and (max-width:1359px){
+        .course_list_empty_ico {
+            background-image: url("/res/home/img/stop/common/ico_none.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        .course_list_empty_desc {
+            font-size: 14px;
+            color: #888888;
+            font-family: "Noto Sans KR", "Sans-Serif";
+            letter-spacing: -0.28px;
+            margin-top: 18px;
+        }
+    }
+    @media screen and (max-width:767px){
+        .course_list_empty_ico {
+            background-image: url("/res/home/img/stop/common/ico_none.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+        .course_list_empty_desc {
+            font-size: 14px;
+            color: #888888;
+            font-family: "Noto Sans KR", "Sans-Serif";
+            letter-spacing: -0.28px;
+            margin-top: 18px;
+        }
+    }
+
+    .course_main_nav .course_main_nav_combo {
+        appearance: none;
+        background-image: url("/res/home/img/stop/common/opt_arr_down.png");
+        background-repeat: no-repeat;
+        background-position-x: calc(100% - 15px);
+        background-position-y: center;
+        background-size: 10px;
+        padding-right: 15px;
+        background-color: white;
+        font-family: 'notokr-regular', sans-serif;
+    }
+</style>
+
+
+<header class="page_header">
+    <div class="page_header_wrapper">
+        <h1 class="page_header_title">교육 신청</h1>
+        <ul class="page_header_breadcrumb">
+        </ul>
+    </div>
+    <div class="page_header_img"></div>
+</header>
+<div id="section" class="page_content_body">
+    <div class="container">
+
+        <article class="course">
+            <!-- 왼쪽 서브메뉴 -->
+
+            <nav class="course_sidebar">
+                <div class="course_sidebar_tm_header">
+                    <span class="title" style="font-size:20px">과정검색</span>
+                    <img class="close" src="/res/home/img/stop/common/btn_close.png"/>
+                    <div class="course_main_nav_tm_taglist"></div>
+                </div>
+                <nav class="course_search">
+                    <input class="course_search_input" placeholder="강의명 검색">
+                    <label class="course_search_label">
+                        <img class="course_search_img" src="/res/home/img/stop/common/btn_search.png">
+                    </label>
+                </nav>
+
+                <div class="course_sidebar_wrapper attr">
+                    <div class="course_sidebar_title">
+                        <span>과정분야</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list courseAttr">
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="depth1_1">양성교육<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="depth1_2">보수교육<span class="checkmark"></span></label>
+                            <div class="course_sidebar_list_depth2">
+                                <label class="course_sidebar_depth2"><input type="checkbox" name="depth2" value="depth1_2_1" >공통역량강화교육<span class="checkmark"></span></label>
+                                <label class="course_sidebar_depth2"><input type="checkbox" name="depth2" value="depth1_2_2" >직무역량강화교육(입문)<span class="checkmark"></span></label>
+                                <label class="course_sidebar_depth2"><input type="checkbox" name="depth2" value="depth1_2_3" >직무역량강화교육(실무)<span class="checkmark"></span></label>
+                                <label class="course_sidebar_depth2"><input type="checkbox" name="depth2" value="depth1_2_4" >직무역량강화교육(전문)<span class="checkmark"></span></label>
+                                <label class="course_sidebar_depth2"><input type="checkbox" name="depth2" value="depth1_2_5">리더십역량강화교육<span class="checkmark"></span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course_sidebar_wrapper">
+                    <div class="course_sidebar_title">
+                        <span>모집상태</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list course_sidebar_list_status">
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="wating" data-val="모집예정">모집예정<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="registering" data-val="모집중">모집중<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="end" data-val="모집종료">모집종료<span class="checkmark"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="course_sidebar_wrapper">
+                    <div class="course_sidebar_title">
+                        <span>교육방법</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list course_sidebar_list_online">
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="화상" data-val="화상">화상<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="집체" data-val="집체">집체<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="이러닝" data-val="이러닝">이러닝<span class="checkmark"></span></label>
+                        </div>
+                        <div class="course_sidebar_list_depth1">
+                            <label class="course_sidebar_depth1"><input type="checkbox" name="depth1" value="블렌디드" data-val="블렌디드">블렌디드 러닝<span class="checkmark"></span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="course_sidebar_wrapper field target">
+                    <div class="course_sidebar_title alert_login">
+                        <span class="alert_login">기관 유형</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list"></div>
+                </div>
+                <div class="course_sidebar_wrapper position target">
+                    <div class="course_sidebar_title alert_login">
+                        <span>교육대상 (직위)</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list"></div>
+                </div>
+                <div class="course_sidebar_wrapper career target">
+                    <div class="course_sidebar_title">
+                        <span class="alert_login">교육대상 (경력)</span>
+                        <div class="course_sidebar_btn"></div>
+                    </div>
+                    <div class="course_sidebar_list"></div>
+                </div>
+
+                <div class="course_sidebar_tm_button"><p>과정보기</p></div>
+            </nav>
+
+
+
+            <!-- 오른쪽 메인 리스트 -->
+
+            <div class="course_main">
+                <div class="course_main_nav_tm tm_show">
+                    <div class="course_main_nav_tm_left">
+                        <div class="course_main_nav_info_total"></div>
+                    </div>
+                    <div class="course_main_nav_tm_right">
+                        <select class="course_main_nav_order" name="order">
+                            <option value="new">최신순</option>
+                            <option value="hot">인기순</option>
+                            <option value="fast">빠른마감순</option>
+                        </select>
+                        <div class="course_main_nav_info_btn pc_show">
+                            <label class="course_main_nav_info_viewselect">
+                                <img class="course_main_nav_info_viewselect_img" src="/res/home/img/stop/common/btn_cardview.png">
+                            </label>
+                        </div>
+                        <div class="course_main_nav_info_btn">
+                            <label class="course_main_nav_info_filter">
+                                <img class="course_main_nav_info_filter_img" src="/res/home/img/stop/common/btn_filter.png">
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                </div>
+                <!--tm tag List -->
+                <div class="course_main_nav_tm_taglist main">
+                    <div class="course_main_nav_tm_taglist_tag initialize">초기화</div>
+                </div>
+                <!-- ------------------------- -->
+                <div class="course_main_nav">
+                    <select class="course_main_nav_combo" name="year">
+                        <option value="2021">2021년</option>
+                        <option value="2020">2020년</option>
+                        <option value="2019">2019년</option>
+                        <option value="2018">2018년</option>
+                        <option value=2017>2017년</option>
+                    </select>
+                    <div class="course_main_nav_info">
+                        <p class="course_main_nav_info_total"></p>
+                        <div class="course_main_nav_info_right">
+                        <ul class="course_main_nav_info_ul">
+                            <li value="new">최신순</li>
+                            <li value="hot">인기순</li>
+                            <li value="fast">빠른마감순</li>
+                        </ul>
+                        <label class="course_main_nav_info_viewselect">
+                            <img class="course_main_nav_info_viewselect_img" src="/res/home/img/stop/common/btn_cardview.png">
+                        </label>
+                        </div>
+                    </div>
+
+                    <div class="course_main_nav_taglist">
+                        <div class="course_main_nav_taglist_tag initialize">초기화</div>
+                    </div>
+                </div>
+                <div class="course_main_list">
+                    <div class="home_card_item_wrapper">
+                        <div class="home_card_slide">
+<!--                        카드-->
+<!--                            <div class="course_list_wrapper">-->
+<!--                                <div class="course_list_image">-->
+<!--                                    <div class="list_item_enroll">-->
+<!--                                        <div class="list_item_enroll_end">모집종료</div>-->
+<!--                                        <div class="list_item_enroll_ing">모집중</div>-->
+<!--                                        <div class="list_item_enroll_plan">모집예정</div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list_item_state">-->
+<!--                                        <div class="list_item_state_online">온라인</div>-->
+<!--                                        <div class="list_item_state_offline">오프라인</div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="course_list_desc">-->
+<!--                                    <div class="list_item_category">종사자 보수교육</div>-->
+<!--                                    <div class="list_item_title">수락산 물개바위</div>-->
+<!--                                    <div class="list_item_info_period">총 3회 / 2020.06.10</div>-->
+<!--                                    <div class="list_item_info_personnel">각 25명</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course_list_wrapper">-->
+<!--                                <div class="course_list_image">-->
+<!--                                    <div class="list_item_enroll">-->
+<!--                                        <div class="list_item_enroll_end">모집종료</div>-->
+<!--                                        <div class="list_item_enroll_ing">모집중</div>-->
+<!--                                        <div class="list_item_enroll_plan">모집예정</div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list_item_state">-->
+<!--                                        <div class="list_item_state_online">온라인</div>-->
+<!--                                        <div class="list_item_state_offline">오프라인</div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="course_list_desc">-->
+<!--                                    <div class="list_item_category">종사자 보수교육</div>-->
+<!--                                    <div class="list_item_title">수락산 물개바위</div>-->
+<!--                                    <div class="list_item_info_period">총 3회 / 2020.06.10</div>-->
+<!--                                    <div class="list_item_info_personnel">각 25명</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course_list_wrapper">-->
+<!--                                <div class="course_list_image">-->
+<!--                                    <div class="list_item_enroll">-->
+<!--                                        <div class="list_item_enroll_end">모집종료</div>-->
+<!--                                        <div class="list_item_enroll_ing">모집중</div>-->
+<!--                                        <div class="list_item_enroll_plan">모집예정</div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list_item_state">-->
+<!--                                        <div class="list_item_state_online">온라인</div>-->
+<!--                                        <div class="list_item_state_offline">오프라인</div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="course_list_desc">-->
+<!--                                    <div class="list_item_category">종사자 보수교육</div>-->
+<!--                                    <div class="list_item_title">수락산 물개바위</div>-->
+<!--                                    <div class="list_item_info_period">총 3회 / 2020.06.10</div>-->
+<!--                                    <div class="list_item_info_personnel">각 25명</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="course_list_wrapper">-->
+<!--                                <div class="course_list_image">-->
+<!--                                    <div class="list_item_enroll">-->
+<!--                                        <div class="list_item_enroll_end">모집종료</div>-->
+<!--                                        <div class="list_item_enroll_ing">모집중</div>-->
+<!--                                        <div class="list_item_enroll_plan">모집예정</div>-->
+<!--                                    </div>-->
+<!--                                    <div class="list_item_state">-->
+<!--                                        <div class="list_item_state_online">온라인</div>-->
+<!--                                        <div class="list_item_state_offline">오프라인</div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="course_list_desc">-->
+<!--                                    <div class="list_item_category">종사자 보수교육</div>-->
+<!--                                    <div class="list_item_title">수락산 물개바위</div>-->
+<!--                                    <div class="list_item_info_period">총 3회 / 2020.06.10</div>-->
+<!--                                    <div class="list_item_info_personnel">각 25명</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                            <div class="course_list_empty">
+                                <div class="course_list_empty_ico"></div>
+                                <p class="course_list_empty_desc">일치하는 내용이 없습니다.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </div>
+</div>
+
+<!--리스트 뷰 -->
+

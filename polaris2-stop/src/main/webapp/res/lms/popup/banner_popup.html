@@ -1,0 +1,70 @@
+<style>
+
+    .banner_popup {
+        border:6px solid #183072;
+        overflow: hidden;
+    }
+
+    .banner_popup .banner_popup_title {
+        cursor:pointer;
+        height: 58px;
+        line-height: 58px;
+        font-family: notokr-medium, NanumGothicBold;
+        background-color: #183072;
+        color: #ffffff;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .banner_popup  .banner_popup_title > img {
+        margin-top: 22px;
+        cursor: pointer;
+        float: right;
+    }
+
+    .banner_popup  .banner_popup_content {
+        background: #FFFFFF;
+        overflow: hidden;
+        color: #575757;
+        text-align: left;
+        font-size: 14px;
+        font-family: notokr-medium, NanumGothicBold;
+    }
+
+    .banner_popup .banner_popup_bottom_bar {
+        background-color:#5d626e;
+        height: 45px;
+        line-height: 45px;
+        color:#ffffff;
+        font-family: notokr-medium, NanumGothicBold;
+        font-size:14px;
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+    .banner_popup  .banner_popup_bottom_bar div {
+        cursor:pointer;
+    }
+
+    .banner_popup  img {
+        display:block;
+    }
+
+    .banner_popup_title_text {
+        display:inline-block;
+        max-width:90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+</style>
+<div class="banner_popup popup no_adjust"  data-lia-position="absolute"  data-lia-position-top="10px" data-lia-position-left="10px">
+    <div class="banner_popup_title"><span class="banner_popup_title_text" style="float: left;"></span><img src="/res/lms/popup/banner_popup_close.png" class="banner_popup_close_button right"/></div>
+    <div class="banner_popup_content" style="text-align: left;">
+    </div>
+    <div class="banner_popup_bottom_bar">
+        <div style="float:left" class="banner_popup_never_button"><span class="polaris_string" data-polaris-string-key="BUTTON_TEXT.DO_NOT_SHOW_IT_AGAIN_TODAY"></span></div>
+        <div style="float:right" class="banner_popup_close_button"><span class="polaris_string" data-polaris-string-key="BUTTON_TEXT.CLOSE"></span></div>
+    </div>
+</div>

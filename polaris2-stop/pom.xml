@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.vsquare.polaris2</groupId>
+    <artifactId>polaris2-stop</artifactId>
+    <name>Polaris2-Stop</name>
+    <packaging>war</packaging>
+    <version>1.0.0-BUILD-SNAPSHOT</version>
+
+    <properties>
+
+        <!-- maven-compiler-plugin -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <maven-compiler-plugin.target.version>1.8</maven-compiler-plugin.target.version>
+        <maven-compiler-plugin.source.version>1.8</maven-compiler-plugin.source.version>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <!-- Polaris-Core -->
+        <polaris2-core.version>1.0.0</polaris2-core.version>
+
+        <!-- MariaDB-JDBC -->
+        <mariadb-jdbc.version>2.7.0</mariadb-jdbc.version>
+    </properties>
+
+    <dependencies>
+
+        <!-- Polaris2-Core -->
+<!--        <dependency>-->
+<!--            <groupId>com.vsquare.polaris2</groupId>-->
+<!--            <artifactId>polaris2-core</artifactId>-->
+<!--            <version>${polaris2-core.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.mariadb.jdbc</groupId>-->
+<!--            <artifactId>mariadb-java-client</artifactId>-->
+<!--            <version>2.7.0</version>-->
+<!--        </dependency>-->
+        
+<!--        <dependency>-->
+<!--            <groupId>com.oracle</groupId>-->
+<!--            <artifactId>ojdbc</artifactId>-->
+<!--            <version>12</version>-->
+<!--            <scope>system</scope>-->
+<!--            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/ojdbc8.jar</systemPath>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.20</version>-->
+<!--        </dependency>-->
+
+        <dependency>
+            <groupId>Kisinfo.Check</groupId>
+            <artifactId>IPINClient</artifactId>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/IPINClient.jar</systemPath>
+            <scope>system</scope>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>NiceID.Check</groupId>
+            <artifactId>CPClient</artifactId>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/NiceID.jar</systemPath>
+            <scope>system</scope>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>surem_api</groupId>
+            <artifactId>surem_api</artifactId>
+            <systemPath>${basedir}/src/main/webapp/WEB-INF/lib/surem_api.jar</systemPath>
+            <scope>system</scope>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.vsquare.polaris2</groupId>
+            <artifactId>polaris2-core</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

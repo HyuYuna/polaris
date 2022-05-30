@@ -1,0 +1,832 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vsquare.polaris2.stop.database.mapper.ProjectMapper">
+
+
+    <select id="selectUserByDI" resultType="int">
+		SELECT COUNT(*) AS count from TB_USER_PROPERTY where value = #{di}
+	</select>
+
+	<!-- StudentInfo -->
+	<resultMap type="com.vsquare.polaris2.stop.model.stat.StudentCountDetail" id="studentCountDetailResultMap">
+		<id property="courseId" column="course_id"/>
+		<result property="studentCount" column="student_count"/>
+		<result property="maleStudentCount" column="male_student_count"/>
+		<result property="femaleStudentCount" column="female_student_count"/>
+		<result property="companyType46StudentCount" column="company_type_46_student_count"/>
+		<result property="companyType47StudentCount" column="company_type_47_student_count"/>
+		<result property="companyType48StudentCount" column="company_type_48_student_count"/>
+		<result property="companyType49StudentCount" column="company_type_49_student_count"/>
+		<result property="companyType50StudentCount" column="company_type_50_student_count"/>
+		<result property="companyType51StudentCount" column="company_type_51_student_count"/>
+		<result property="companyType52StudentCount" column="company_type_52_student_count"/>
+		<result property="companyTypeEtcStudentCount" column="company_type_etc_student_count"/>
+		<result property="companyTypeNullStudentCount" column="company_type_null_student_count"/>
+	</resultMap>
+
+	<select id="selectStudentCountDetailListByCourseIdList" resultMap="studentCountDetailResultMap">
+		SELECT
+			A.course_id,
+			SUM(1) AS student_count,
+			SUM(
+				CASE
+					WHEN C.gender_code = 1 THEN 1
+					ELSE 0
+					END
+			) AS male_student_count,
+			SUM(
+				CASE
+					WHEN C.gender_code = 2 THEN 1
+					ELSE 0
+					END
+			) AS female_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 46 THEN 1
+					ELSE 0
+					END
+			) AS company_type_46_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 47 THEN 1
+					ELSE 0
+					END
+			) AS company_type_47_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 48 THEN 1
+					ELSE 0
+					END
+			) AS company_type_48_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 49 THEN 1
+					ELSE 0
+					END
+			) AS company_type_49_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 50 THEN 1
+					ELSE 0
+					END
+			) AS company_type_50_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 51 THEN 1
+					ELSE 0
+					END
+			) AS company_type_51_student_count,
+			SUM(
+				CASE
+					WHEN D.value = 52 THEN 1
+					ELSE 0
+					END
+			) AS company_type_52_student_count,
+		    SUM(
+				CASE
+					WHEN D.value = 66 THEN 1
+					ELSE 0
+					END
+			) AS company_type_etc_student_count,
+			SUM(
+				CASE
+					WHEN D.value IS NULL THEN 1
+					ELSE 0
+					END
+			) AS company_type_null_student_count
+		FROM TB_COURSE_ENROLLMENT A
+		INNER JOIN TB_COURSE B
+		ON B.id = A.course_id
+		INNER JOIN TB_USER C
+		ON C.idx = A.student_user_idx
+		INNER JOIN TB_STUDENT_REPORT E
+		ON E.course_id = A.course_id AND E.student_user_idx = A.student_user_idx
+		LEFT OUTER JOIN TB_USER_PROPERTY D
+		ON D.user_idx = C.idx AND D.name = 'agTypeDp'
+		WHERE A.status_code = 20 AND E.course_completion_status_code = 2
+		AND A.course_id IN
+		<foreach collection="course_id_list" item="course_id" open="(" close=")" separator=",">
+			#{course_id}
+		</foreach>
+		GROUP BY A.course_id
+	</select>
+
+
+	<select id="selectStatisticsList1" resultType="Map">
+
+		select
+		concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+		count(*) as a0,
+
+		sum(
+			IF( B.learning_method_code = 4, 1, 0)
+		) as a1,
+
+		sum(
+			IF( B.learning_method_code = 3, 1, 0)
+		) as a2,
+
+		sum(
+			IF( B.learning_method_code = 1, 1, 0)
+		) as a3,
+
+		sum(
+			IF( B.learning_method_code = 2, 1, 0)
+		) as a4,
+
+		count(*) as a5,
+
+		sum(
+			IF( B.learning_method_code = 4, B.max_student_count, 0)
+		) as a6,
+
+		sum(
+			IF( B.learning_method_code = 3, B.max_student_count, 0)
+		) as a7,
+
+		sum(
+			IF( B.learning_method_code = 1, B.max_student_count, 0)
+		) as a8,
+
+		sum(
+			IF( B.learning_method_code = 2, B.max_student_count, 0)
+		) as a9,
+
+		sum(B.max_student_count) as a10,
+
+		sum(
+			IF( B.learning_method_code = 4, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA WHERE AA.course_id = B.id AND AA.status_code = 20 ), 0)
+		) as a11,
+
+		sum(
+			IF( B.learning_method_code = 3, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA WHERE AA.course_id = B.id AND AA.status_code = 20 ), 0)
+		) as a12,
+
+		sum(
+			IF( B.learning_method_code = 1, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA WHERE AA.course_id = B.id AND AA.status_code = 20 ), 0)
+		) as a13,
+
+	   sum(
+			IF( B.learning_method_code = 2, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA WHERE AA.course_id = B.id AND AA.status_code = 20 ), 0)
+		) as a14,
+
+		sum(( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA WHERE AA.course_id = B.id AND AA.status_code = 20 ))
+		    as a15,
+
+
+		sum(
+			IF( B.learning_method_code = 4, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA JOIN TB_STUDENT_REPORT${table_postfix} BB ON AA.course_id = BB.course_id AND AA.student_user_idx = BB.student_user_idx WHERE AA.course_id = B.id AND AA.status_code = 20 AND BB.course_completion_status_code = 2 ), 0)
+		) as a16,
+		sum(
+			IF( B.learning_method_code = 3, (  SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA JOIN TB_STUDENT_REPORT${table_postfix} BB ON AA.course_id = BB.course_id AND AA.student_user_idx = BB.student_user_idx WHERE AA.course_id = B.id AND AA.status_code = 20 AND BB.course_completion_status_code = 2 ), 0)
+		) as a17,
+		sum(
+			IF( B.learning_method_code = 1, ( SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA JOIN TB_STUDENT_REPORT${table_postfix} BB ON AA.course_id = BB.course_id AND AA.student_user_idx = BB.student_user_idx WHERE AA.course_id = B.id AND AA.status_code = 20 AND BB.course_completion_status_code = 2 ), 0)
+		) as a18,
+		sum(
+			IF( B.learning_method_code = 2, (  SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA JOIN TB_STUDENT_REPORT${table_postfix} BB ON AA.course_id = BB.course_id AND AA.student_user_idx = BB.student_user_idx WHERE AA.course_id = B.id AND AA.status_code = 20 AND BB.course_completion_status_code = 2 ), 0)
+		) as a19,
+
+		sum((  SELECT COUNT(*) FROM TB_COURSE_ENROLLMENT${table_postfix} AA JOIN TB_STUDENT_REPORT${table_postfix} BB ON AA.course_id = BB.course_id AND AA.student_user_idx = BB.student_user_idx WHERE AA.course_id = B.id AND AA.status_code = 20 AND BB.course_completion_status_code = 2 ))
+		as a20
+
+		from TB_COURSE B
+		join TB_TERM C ON C.id = B.term_id
+		where B.exclude_from_statistics = 0
+		  <if test="course_year != null">
+			  AND B.year = #{course_year}
+		  </if>
+		<if test="start_date !=null">
+		  and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+
+	<select id="selectStatisticsList2" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2
+
+		from TB_COURSE B
+				 join TB_TERM C ON C.id = B.term_id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.gender_code = 2 AND BBB.status_code = 20
+		<if test="is_completed != null and is_completed == 1">
+			and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2
+		</if>
+		<if test="is_completed != null and is_completed == 0">
+			and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2)
+		</if>
+				 group by BBB.course_id ) BB1 ON BB1.course_id = B.id
+
+
+
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		where BBB2.gender_code = 1 AND BBB.status_code = 20
+		<if test="is_completed != null and is_completed == 1">
+			and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2
+		</if>
+		<if test="is_completed != null and is_completed == 0">
+			and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2)
+		</if>
+		group by BBB.course_id ) BB2 ON BB2.course_id = B.id
+
+
+
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		where BBB.status_code = 20
+
+		<if test="is_completed != null and is_completed == 1">
+			and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2
+		</if>
+		<if test="is_completed != null and is_completed == 0">
+			and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2)
+		</if>
+				 group by BBB.course_id ) BB3 ON BB3.course_id = B.id
+
+		where B.exclude_from_statistics = 0 and C.type_code = 2
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+	<select id="selectStatisticsList3" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2,
+			sum( BB4.count ) as a3,
+			sum( BB5.count ) as a4,
+			sum( BB6.count ) as a5,
+			sum( BB7.count ) as a6,
+			sum( BB8.count ) as a7,
+			sum( BB9.count ) as a8
+
+		from TB_COURSE B
+		join TB_TERM C ON C.id = B.term_id
+
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '46'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB1 ON BB1.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '47'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB2 ON BB2.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '48'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB3 ON BB3.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '49'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB4 ON BB4.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '50'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB5 ON BB5.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '51'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB6 ON BB6.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp' AND BBB3.value = '52'
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB7 ON BB7.course_id = B.id
+
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+		left outer join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'agTypeDp'
+		where ( BBB3.value  IS NULL OR BBB3.value  not in ('46', '47', '48', '49', '50', '51', '52') ) and BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB8 ON BB8.course_id = B.id
+		left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+		where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB9 ON BB9.course_id = B.id
+
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+
+	<select id="selectStatisticsList4" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2,
+			sum( BB4.count ) as a3,
+			sum( BB5.count ) as a4,
+			sum( BB6.count ) as a5,
+			sum( BB7.count ) as a6,
+			sum( BB8.count ) as a7,
+			sum( BB9.count ) as a8,
+			sum( BB10.count ) as a9,
+			sum( BB11.count ) as a10,
+			sum( BB12.count ) as a11,
+			sum( BB13.count ) as a12,
+			sum( BB14.count ) as a13,
+			sum( BB15.count ) as a14,
+			sum( BB16.count ) as a15,
+			sum( BB17.count ) as a16,
+			sum( BB18.count ) as a17,
+			sum( BB19.count ) as a18
+
+		from TB_COURSE B
+				 join TB_TERM C ON C.id = B.term_id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '강원%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB1 ON BB1.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '경기%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB2 ON BB2.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '경남%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB3 ON BB3.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '경북%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB4 ON BB4.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '광주%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB5 ON BB5.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '대구%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB6 ON BB6.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '대전%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB7 ON BB7.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '부산%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB8 ON BB8.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '서울%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB9 ON BB9.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '세종%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB10 ON BB10.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '울산%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB11 ON BB11.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '인천%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB12 ON BB12.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '전남%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB13 ON BB13.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '전북%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB14 ON BB14.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '제주%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB15 ON BB15.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '충남%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB16 ON BB16.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.address_1 LIKE '충북%' AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB17 ON BB17.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where ( BBB2.address_1  IS NULL OR
+									   !(
+									   BBB2.address_1 LIKE '강원%' OR
+									   BBB2.address_1 LIKE '경기%' OR
+									   BBB2.address_1 LIKE '경남%' OR
+									   BBB2.address_1 LIKE '경북%' OR
+									   BBB2.address_1 LIKE '광주%' OR
+									   BBB2.address_1 LIKE '대구%' OR
+									   BBB2.address_1 LIKE '대전%' OR
+									   BBB2.address_1 LIKE '부산%' OR
+									   BBB2.address_1 LIKE '서울%' OR
+									   BBB2.address_1 LIKE '세종%' OR
+									   BBB2.address_1 LIKE '울산%' OR
+									   BBB2.address_1 LIKE '인천%' OR
+									   BBB2.address_1 LIKE '전남%' OR
+									   BBB2.address_1 LIKE '전북%' OR
+									   BBB2.address_1 LIKE '제주%' OR
+									   BBB2.address_1 LIKE '충남%' OR
+									   BBB2.address_1 LIKE '충북%'
+									   ) ) and BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB18 ON BB18.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB19 ON BB19.course_id = B.id
+
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+	<select id="selectStatisticsList5" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2,
+			sum( BB4.count ) as a3,
+			sum( BB5.count ) as a4,
+			sum( BB6.count ) as a5
+
+		from TB_COURSE B
+				 join TB_TERM C ON C.id = B.term_id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.company_position = 6 AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB1 ON BB1.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.company_position = 7 AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB2 ON BB2.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.company_position = 8 AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB3 ON BB3.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.company_position = 9 AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB4 ON BB4.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+								   where BBB2.company_position = 10 AND BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id 
+		) BB5 ON BB5.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB6 ON BB6.course_id = B.id
+
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+
+	<select id="selectStatisticsList6" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2,
+			sum( BB4.count ) as a3,
+			sum( BB5.count ) as a4,
+			sum( BB6.count ) as a5
+
+		from TB_COURSE B
+				 join TB_TERM C ON C.id = B.term_id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career' AND BBB3.value = '1'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB1 ON BB1.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career' AND BBB3.value = '2'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB2 ON BB2.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career' AND BBB3.value = '3'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB3 ON BB3.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career' AND BBB3.value = '4'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB4 ON BB4.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career' AND BBB3.value = '5'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB5 ON BB5.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB6 ON BB6.course_id = B.id
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+
+	<select id="selectStatisticsList7" resultType="Map">
+		select
+			concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+			sum( BB1.count ) as a0,
+			sum( BB2.count ) as a1,
+			sum( BB3.count ) as a2,
+			sum( BB4.count ) as a3,
+			sum( BB5.count ) as a4,
+			sum( BB6.count ) as a5
+
+		from TB_COURSE B
+				 join TB_TERM C ON C.id = B.term_id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career_present' AND BBB3.value = '1'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB1 ON BB1.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career_present' AND BBB3.value = '2'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB2 ON BB2.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career_present' AND BBB3.value = '3'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB3 ON BB3.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career_present' AND BBB3.value = '4'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB4 ON BB4.course_id = B.id
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+			join TB_USER${table_postfix} BBB2 on BBB2.idx = BBB.student_user_idx
+									   join TB_USER_PROPERTY${table_postfix} BBB3 on BBB3.user_idx = BBB2.idx AND BBB3.name = 'career_present' AND BBB3.value = '5'
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB5 ON BB5.course_id = B.id
+
+				 left outer join ( select BBB.course_id, count(*) as count from TB_COURSE_ENROLLMENT${table_postfix} BBB <if test="is_completed != null"> left outer join TB_STUDENT_REPORT${table_postfix} BBB_SR on BBB_SR.course_id = BBB.course_id AND BBB_SR.student_user_idx = BBB.student_user_idx </if>
+								   where BBB.status_code = 20 <if test="is_completed != null and is_completed == 1"> and BBB_SR.course_completion_status_code IS NOT NULL and BBB_SR.course_completion_status_code = 2 </if> <if test="is_completed != null and is_completed == 0"> and (BBB_SR.course_completion_status_code IS NULL OR BBB_SR.course_completion_status_code != 2) </if> group by BBB.course_id  ) BB6 ON BB6.course_id = B.id
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+	<select id="selectStatisticsList8" resultType="Map">
+
+		select AA.course_count, c.value as type_code, count(*) as count from (
+		select a.student_user_idx, count(*) as course_count
+		from TB_COURSE_ENROLLMENT${table_postfix} a
+		<if test="is_completed != null">
+			left outer join TB_STUDENT_REPORT${table_postfix} a_sr on a_sr.course_id = a.course_id AND a_sr.student_user_idx = a.student_user_idx
+		</if>
+		join TB_COURSE a1 ON a1.id = a.course_id
+		join TB_TERM a2 ON a2.id = a1.term_id
+		join TB_USER${table_postfix} b on b.idx = a.student_user_idx
+		left outer join TB_USER_PROPERTY${table_postfix} c on c.user_idx = b.idx and c.name = 'agTypeDp'
+		where substr(a1.operation_code, 6, 1) IN ('A', 'B', 'C', 'D')
+		and a1.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND a1.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and  #{start_date} &lt;= a1.start_date
+		</if>
+		<if test="end_date !=null">
+			and a1.start_date &lt;= #{end_date}
+		</if>
+		<if test="is_completed != null and is_completed == 1">
+		and a_sr.course_completion_status_code IS NOT NULL and a_sr.course_completion_status_code = 2
+		</if>
+		<if test="is_completed != null and is_completed == 0">
+		and (a_sr.course_completion_status_code IS NULL OR a_sr.course_completion_status_code != 2)
+		</if>
+		<if test="type_code != null">
+			and a2.type_code = #{type_code}
+		</if>
+		group by a.student_user_idx
+		) AA
+		left outer join TB_USER_PROPERTY${table_postfix} c on c.user_idx = AA.student_user_idx and c.name = 'agTypeDp'
+		group by AA.course_count, c.value
+	</select>
+
+
+
+	<select id="selectStatisticsList9" resultType="Map">
+		select
+		concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1)) as type_code,
+
+		sum( BB1.count ) as a0,
+		sum( BB2.count ) as a1,
+		sum( BB3.count ) as a2,
+		sum( BB31.count ) as a3,
+		sum( BB4.count ) as a4,
+		sum( BB5.count ) as a5,
+		sum( BB6.count ) as a6,
+		sum( BB7.count ) as a7,
+		sum( BB8.count ) as a8,
+		sum( BB9.count ) as a9,
+		sum( BB10.count ) as a10,
+		sum( BB11.count ) as a11,
+		sum( BB12.count ) as a12,
+		sum( BB13.count ) as a13,
+		sum( BB14.count ) as a14
+
+		from TB_COURSE B
+		join TB_TERM C ON C.id = B.term_id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 70
+		group by BBB1.id
+		) BB1 ON BB1.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 71
+		group by BBB1.id
+		) BB2 ON BB2.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 72
+		group by BBB1.id
+		) BB3 ON BB3.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 73
+		group by BBB1.id
+		) BB31 ON BB31.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 74
+		group by BBB1.id
+		) BB4 ON BB4.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 75
+		group by BBB1.id
+		) BB5 ON BB5.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 76
+		group by BBB1.id
+		) BB6 ON BB6.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 77
+		group by BBB1.id
+		) BB7 ON BB7.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 78
+		group by BBB1.id
+		) BB8 ON BB8.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 79
+		group by BBB1.id
+		) BB9 ON BB9.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 80
+		group by BBB1.id
+		) BB10 ON BB10.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 81
+		group by BBB1.id
+		) BB11 ON BB11.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 82
+		group by BBB1.id
+		) BB12 ON BB12.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		join TB_COURSE_ATTRIBUTE BBB12 on BBB12.course_id = BBB1.id AND BBB12.attribute_id = 83
+		group by BBB1.id
+		) BB13 ON BB13.course_id = B.id
+
+		left outer join ( select BBB1.id as course_id, count(*) as count from TB_COURSE BBB1
+		group by BBB1.id
+		) BB14 ON BB14.course_id = B.id
+
+		where B.exclude_from_statistics = 0
+		<if test="course_year != null">
+			AND B.year = #{course_year}
+		</if>
+		<if test="start_date !=null">
+			and #{start_date} &lt;= B.start_date
+		</if>
+		<if test="end_date !=null">
+			and B.start_date &lt;= #{end_date}
+		</if>
+		<if test="type_code != null">
+			and C.type_code = #{type_code}
+		</if>
+		group by concat(substr(B.operation_code, 6, 1), substr(B.operation_code, 8, 1))
+
+	</select>
+
+</mapper>

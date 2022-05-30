@@ -1,0 +1,176 @@
+<style>
+    .intro_video_popup {
+        background: white;
+        box-sizing: border-box;
+    }
+
+    @media screen and (min-width: 1240px){
+        .intro_video_popup {
+            width: 800px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .intro_video_popup {
+            width: calc(100vw - 15px);
+        }
+    }
+    @media screen and (max-width: 767px){
+        .intro_video_popup {
+            width: calc(100vw - 15px);
+            min-height: 350px;
+        }
+    }
+
+
+    .popup_header {
+        background: white;
+        box-sizing: border-box;
+        border-bottom: 2px solid #701e97;
+    }
+
+    .popup_header .popup_title {
+        font-family: notokr-bold, sans-serif;
+        color: #232323;
+    }
+
+    .popup_header .close {
+        cursor: pointer;
+    }
+
+    @media screen and (min-width: 1240px){
+        .popup_header {
+            width: 100%;
+            padding: 40px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 24px;
+            letter-spacing: -0.48px;
+        }
+
+        .popup_header .close {
+            width: 24px;
+            margin-top: 5px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+
+        .popup_header .close {
+            width: 18px;
+        }
+
+    }
+    @media screen and (max-width: 767px){
+        .popup_header {
+            width: 100%;
+            padding: 27px 20px;
+        }
+
+        .popup_header .popup_title {
+            font-size: 18px;
+            letter-spacing: -0.36px;
+        }
+
+        .popup_header .close {
+            width: 18px;
+        }
+    }
+
+
+
+
+    .popup_body {
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .popup_body #iframe {
+        width: 100%;
+    }
+
+    .popup_body .btn_download {
+        display: block;
+        border: none;
+        background-color: #7147a9;
+        color: white;
+        text-align: center;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    @media screen and (min-width: 1240px){
+        .popup_body {
+            padding: 40px;
+            min-height: 214px;
+        }
+
+        .popup_body #iframe {
+            height: 405px;
+        }
+
+        .popup_body .btn_download {
+            width: 140px;
+            height: 56px;
+        }
+    }
+    @media screen and (max-width: 1240px) and (min-width: 768px){
+
+        .popup_body {
+            padding: 27px 20px;
+            min-height: 214px;
+        }
+
+        .popup_body #iframe {
+            height: calc(56.25vw - 22px);
+        }
+
+        .popup_body .btn_download {
+            width: 120px;
+            height: 54px;
+        }
+    }
+    @media screen and (max-width: 767px){
+        .popup_body {
+            padding: 27px 20px 17px 20px;
+            min-height: 214px;
+        }
+
+        .popup_body #iframe {
+            height: calc(56.25vw - 22px);
+        }
+
+        .popup_body .btn_download {
+            width: 120px;
+            height: 54px;
+        }
+    }
+
+
+</style>
+
+
+
+<div id="intro_video_dim" class="dim" data-lia-popup="#intro_video_popup"></div>
+<div id="intro_video_popup" class="intro_video_popup popup" data-lia-dim="#intro_video_dim">
+
+    <div class="popup_header">
+        <span class="popup_title">맛보기 영상</span>
+        <img class="right close" src="/res/home/img/stop/common/btn_close.png" alt="닫기">
+    </div>
+
+    <div class="popup_body">
+
+    </div>
+</div>

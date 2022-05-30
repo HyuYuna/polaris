@@ -1,0 +1,105 @@
+<style>
+
+    .message_popup {
+        position: relative;
+        min-width: 420px;
+        min-height: 280px;
+        background-color: #ffffff;
+        font-family: notokr-regular;
+    }
+    .message_popup .close {
+        position: absolute;
+        right: 25px;
+        top: 25px;
+        cursor: pointer;
+    }
+    .message_popup .title {
+        margin-top: 25px;
+        height: 18px;
+        font-family: notokr-bold, sans-serif;
+        line-height: 18px;
+        font-size: 13px;
+        letter-spacing: -0.26px;
+        font-weight: normal;
+        text-align: center;
+    }
+    .message_popup .text_box {
+        font-size: 13px;
+        text-align: center;
+        padding: 0 40px;
+        position: relative;
+        top: 0;
+        width: 100%;
+    }
+
+    .message_popup .text_box .youtube_test{
+        margin-top: -55px;
+        margin-bottom: 85px;
+        min-width: 360px;
+    }
+    .message_popup .alert_buttons {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 50px;
+    }
+    .message_popup .button {
+        display: inline-block;
+        width: 50%;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: #ffffff;
+        float: left;
+    }
+    .message_popup .alert_confirm_button {
+        background-color: #7147a9;
+    }
+    .message_popup .alert_cancel_button {
+        background-color: #969696;
+    }
+
+
+
+    @media screen and (max-width: 767px) {
+
+        .message_popup {
+            position: relative;
+            min-width: 260px;
+            min-height:220px;
+            padding: 10px;
+            background-color: #ffffff;
+            left: 20px !important;
+            right: 20px !important;
+        }
+
+        .message_popup .text_box {
+            /*margin-top: 40px;*/
+        }
+
+        .message_popup .title {
+            margin-top: 20px;
+        }
+    }
+
+
+
+
+</style>
+
+<div class="dim" data-lia-popup="{next-popup}"></div>
+<div class="message_popup popup" data-lia-dim="{prev-dim}">
+
+<!--    <img class="close" src="/res/lms/popup/message_popup_close.png">-->
+    <div class="title"></div>
+
+    <div class="text_box"></div>
+
+    <input type="text" class="focus" style="opacity: 0; position: absolute; top: -10000px;">
+
+    <div class="alert_buttons">
+        <div class="button alert_cancel_button"><span class="polaris_string" data-polaris-string-key="BUTTON_TEXT.CANCEL"></span></div>
+        <div class="button alert_confirm_button"><span class="polaris_string" data-polaris-string-key="BUTTON_TEXT.OK"></span></div>
+    </div>
+</div>

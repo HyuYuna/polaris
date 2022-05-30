@@ -1,0 +1,531 @@
+<style>
+    /* 숨김처리 */
+    .womens_menu_wrapper{
+        display: none;
+    }
+
+    @media screen and (min-width:1360px) {
+        .womens_menu_wrapper{
+            display: none;
+        }
+    }
+    @media screen and (min-width:768px) and (max-width:1359px) {
+        .womens_menu_wrapper{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 999;
+            overflow-y: scroll;
+            overscroll-behavior: contain;
+        }
+
+        .common_header .common_header_right{
+            position: relative;
+            height: 100%;
+        }
+
+        .common_header .common_header_right .header_close{
+            background-image: url("/res/home/img/stop/common/btn_close.png");
+            background-size: contain;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(0, -50%);
+            width:24px;
+            height: 24px;
+            cursor: pointer;
+        }
+    }
+    @media screen and (max-width:767px) {
+        .womens_menu_wrapper{
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            background-color: #ffffff;
+            z-index: 999;
+            overflow-y: auto;
+        }
+        .common_header .common_header_right{
+            position: relative;
+            height: 100%;
+        }
+        .common_header .common_header_right .header_close{
+            background-image: url("/res/home/img/stop/common/btn_close.png");
+            background-size: contain;
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translate(0, -50%);
+            width:24px;
+            height: 24px;
+            cursor: pointer;
+        }
+    }
+
+    /* 메뉴 해더 영역 */
+    .womens_header_login{
+        display: none;
+    }
+    @media screen and (min-width:1360px) {
+
+    }
+    @media screen and (min-width:768px) and (max-width:1359px) {
+        .womens_menu_wrapper .womens_menu_header{
+            border-top: 1px solid #e5e5e5;
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_login{
+            line-height: 95px;
+            position: relative;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_name {
+            display: inline-block;
+            vertical-align: top;
+            color: #888888;
+            font-size: 12px;
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_name span{
+            font-family: 'notokr-medium', Sans-Serif;
+            font-size: 18px;
+            color: #232323;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content {
+            position: absolute;
+            right: 32px;
+            top: 0;
+            font-size: 14px;
+            color: #888888;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content li{
+            display: inline-block;
+            cursor: pointer;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content .womens_member_logout{
+            margin-left: 40px;
+            position: relative;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content .womens_member_logout::before{
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            transform: translate(0, -50%);
+            width: 1px;
+            height: 10px;
+            background-color: #cccccc;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_basic{
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn{
+            width: 100%;
+            margin: 20px 0px;
+            display: inline-block;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn div{
+            width: calc(50% - 5px);
+            height: 54px;
+            display: inline-block;
+            font-size: 0;
+            vertical-align: top;
+            text-align: center;
+            cursor: pointer;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn .womens_btn_join{
+            border: 1px solid #7147a9;
+            font-size: 14px;
+            line-height: 54px;
+            color: #7147a9;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn .womens_btn_login{
+            background-color: #7147a9;
+            font-size: 14px;
+            line-height: 54px;
+            float: right;
+            color: #ffffff;
+        }
+    }
+    @media screen and (max-width:767px) {
+        .womens_menu_wrapper .womens_menu_header{
+            border-top: 1px solid #e5e5e5;
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_login{
+            line-height: 95px;
+            position: relative;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_name {
+            display: inline-block;
+            vertical-align: top;
+            color: #888888;
+            font-size: 12px;
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_name span{
+            font-family: 'notokr-medium', Sans-Serif;
+            font-size: 18px;
+            color: #232323;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content {
+            position: absolute;
+            right: 32px;
+            top: 0;
+            font-size: 14px;
+            color: #888888;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content li{
+            display: inline-block;
+            cursor: pointer;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content .womens_member_logout{
+            margin-left: 40px;
+            position: relative;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_member_content .womens_member_logout::before{
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: -20px;
+            transform: translate(0, -50%);
+            width: 1px;
+            height: 10px;
+            background-color: #cccccc;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_basic{
+            height: 95px;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn{
+            width: 100%;
+            margin: 20px 0px;
+            display: inline-block;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn div{
+            width: calc(50% - 5px);
+            height: 54px;
+            display: inline-block;
+            font-size: 0;
+            vertical-align: top;
+            text-align: center;
+            cursor: pointer;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn .womens_btn_join{
+            border: 1px solid #7147a9;
+            font-size: 14px;
+            line-height: 54px;
+            color: #7147a9;
+        }
+        .womens_menu_wrapper .womens_menu_header .womens_header_btn .womens_btn_login{
+            background-color: #7147a9;
+            font-size: 14px;
+            line-height: 54px;
+            float: right;
+            color: #ffffff;
+        }
+    }
+
+
+
+
+    /* 메뉴 컨텐츠 부분 */
+    @media screen and (min-width:1360px) {
+
+    }
+    @media screen and (min-width:768px) and (max-width:1359px) {
+        .womens_menu_content{
+            border-top: 12px solid #f8f8f8;
+        }
+        .womens_menu_content .womens_depth_wrapper{
+            border-bottom: 1px solid #e5e5e5;
+            display: inline-block;
+            width: 100%;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title{
+            width: 100%;
+            line-height: 58px;
+            font-size: 18px;
+            position: relative;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .womens_depth_btn{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 16px;
+            height: 16px;
+            background-image: url("/res/home/img/stop/common/btn_more.png");
+            background-size: contain;
+            cursor: pointer;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .womens_depth_btn:active{
+            background-image: url("/res/home/img/stop/common/btn_fold.png");
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title{
+            background-color: #7147a9;
+            padding: 16px 0px;
+            position: relative;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title::before{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -9999px;
+            right: -9999px;
+            height: 100%;
+            z-index: -1;
+            background-color: #7147a9;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title .womens_sub_title{
+            color: #c1b3d7;
+            font-size: 14px;
+            line-height: 38px;
+            cursor: pointer;
+        }
+
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .menu_main_point{
+            color: #7147a9;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title .menu_sub_point{
+            color: #ffffff;
+        }
+    }
+    @media screen and (max-width:767px) {
+        .womens_menu_content{
+            border-top: 12px solid #f8f8f8;
+        }
+        .womens_menu_content .womens_depth_wrapper{
+            border-bottom: 1px solid #e5e5e5;
+            display: inline-block;
+            width: 100%;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title{
+            width: 100%;
+            line-height: 58px;
+            font-size: 18px;
+            position: relative;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .womens_depth_btn{
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 16px;
+            height: 16px;
+            background-image: url("/res/home/img/stop/common/btn_more.png");
+            background-size: contain;
+            cursor: pointer;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .womens_depth_btn:active{
+            background-image: url("/res/home/img/stop/common/btn_fold.png");
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title{
+            background-color: #7147a9;
+            padding: 16px 0px;
+            position: relative;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title::before{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: -9999px;
+            right: -9999px;
+            height: 100%;
+            z-index: -1;
+            background-color: #7147a9;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title .womens_sub_title{
+            color: #c1b3d7;
+            font-size: 14px;
+            line-height: 38px;
+            cursor: pointer;
+        }
+
+        .womens_menu_content .womens_depth_wrapper .womens_depth_title .menu_main_point{
+            color: #7147a9;
+        }
+        .womens_menu_content .womens_depth_wrapper .womens_depth_sub_title .menu_sub_point{
+            color: #ffffff;
+        }
+    }
+
+
+
+    /* 카드리스트 로딩*/
+    @media screen and (min-width:1360px) {
+        .loading_cardlist_item{
+            padding: 24px 0px;
+            border-bottom: 1px solid #e5e5e5;
+            width: 100%;
+            font-size: 0;
+        }
+        .loading_cardlist_item .loading_cardlist_item_img{
+            width: 260px;
+            height: 173px;
+            background-color: #e5e5e5;
+            position: relative;
+            display: inline-block;
+            font-size: 0;
+        }
+        .loading_cardlist_item .loading_cardlist_item_img .loading_cardlist_item_enroll{
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 80px;
+            height: 30px;
+            background-color: #cccccc;
+        }
+        .loading_cardlist_item .loading_cardlist_item_img .loading_cardlist_item_state{
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            width: 80px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #cccccc;
+        }
+        .loading_cardlist_item .loading_cardlist_item_content{
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 34px;
+            margin-left: 40px;
+        }
+        .loading_cardlist_item .loading_cardlist_item_content .loading_cardlist_item_category{
+            width: 100px;
+            height: 14px;
+            background-color: #e5e5e5;
+            margin-bottom:16px;
+        }
+        .loading_cardlist_item .loading_cardlist_item_content .loading_cardlist_item_title{
+            width: 320px;
+            height: 18px;
+            background-color: #e5e5e5;
+            margin-bottom: 20px;
+        }
+        .loading_cardlist_item .loading_cardlist_item_content .loading_cardlist_item_info_period{
+            width: 150px;
+            height: 14px;
+            background-color: #e5e5e5;
+            margin-bottom: 8px;
+        }
+        .loading_cardlist_item .loading_cardlist_item_content .loading_cardlist_item_info_personnel{
+            width: 100px;
+            height: 14px;
+            background-color: #e5e5e5;
+        }
+    }
+    @media screen and (min-width:768px) and (max-width:1359px) {
+
+    }
+    @media screen and (max-width:767px) {
+
+    }
+</style>
+<div class="womens_menu_wrapper">
+    <div class="common_header container">
+        <div class="common_header_left">
+            <div class="header_logo">
+                <img class="nav_logo tablet_show" src="/res/home/img/stop/common/tablet/btn_logo_header.png" alt="womens_logo">
+                <img class="nav_logo mobile_show" src="/res/home/img/stop/common/mobile/btn_logo_header.png" alt="womens_logo">
+            </div>
+            <div class="header_title">통합교육원</div>
+        </div>
+        <div class="common_header_right">
+            <div class="header_close"></div>
+        </div>
+    </div>
+    <div class="womens_menu_header">
+        <div class="womens_header_login container">
+            <div class="womens_member_name"><span>홍길동</span>님</div>
+            <ul class="womens_member_content">
+                <li class="womens_member_info">내정보</li>
+                <li class="womens_member_logout">로그아웃</li>
+            </ul>
+        </div>
+        <div class="womens_header_basic container">
+            <div class="womens_header_btn">
+                <div class="womens_btn_join">회원가입</div>
+                <div class="womens_btn_login">로그인</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="womens_menu_content">
+        <div class="womens_depth_wrapper">
+            <div class="container">
+                <div class="womens_depth_title">
+                    <span class="womens_main_title">교육 소개</span>
+                    <div class="womens_depth_btn"></div>
+                </div>
+            </div>
+        </div>
+        <div class="womens_depth_wrapper">
+            <div class="container">
+                <div class="womens_depth_title">
+                    <span class="womens_main_title">교육 신청</span>
+                    <div class="womens_depth_btn"></div>
+                </div>
+            </div>
+        </div>
+        <div class="womens_depth_wrapper">
+            <div class="container">
+                <div class="womens_depth_title">
+                    <span class="womens_main_title menu_main_point">고객센터</span>
+                    <div class="womens_depth_btn"></div>
+                </div>
+                <ul class="womens_depth_sub_title">
+                    <li class="womens_sub_title">공지사항</li>
+                    <li class="womens_sub_title">자료실</li>
+                    <li class="womens_sub_title menu_sub_point">자주묻는질문</li>
+                    <li class="womens_sub_title">질의응답</li>
+                </ul>
+            </div>
+        </div>
+        <div class="womens_depth_wrapper">
+            <div class="container">
+                <div class="womens_depth_title">
+                    <span class="womens_main_title">나의강의실</span>
+                    <div class="womens_depth_btn"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--카드뷰 로딩1-->
+<!--<div class="loading_home_card_item">-->
+<!--    <div class="loading_card_item_img">-->
+<!--        <div class="loading_card_item_enroll"></div>-->
+<!--        <div class="loading_card_item_state"></div>-->
+<!--    </div>-->
+<!--    <div class="loading_card_item_content">-->
+<!--        <div class="loading_card_item_category"></div>-->
+<!--        <div class="loading_card_item_title"></div>-->
+<!--        <div class="loading_card_item_title_sub"></div>-->
+<!--    </div>-->
+<!--    <div class="loading_card_item_info">--
+<!--        <div class="loading_card_item_info_period"></div>-->
+<!--        <div class="loading_card_item_info_personnel"></div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--카드리스트 로딩-->
+<div class="loading_cardlist_item">
+    <div class="loading_cardlist_item_img">
+        <div class="loading_cardlist_item_enroll"></div>
+        <div class="loading_cardlist_item_state"></div>
+    </div>
+    <div class="loading_cardlist_item_content">
+        <div class="loading_cardlist_item_category"></div>
+
+        <div class="loading_cardlist_item_title"></div>
+        <div class="loading_cardlist_item_info_period"></div>
+        <div class="loading_cardlist_item_info_personnel"></div>
+    </div>
+</div>
+

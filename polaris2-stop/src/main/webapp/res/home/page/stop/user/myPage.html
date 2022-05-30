@@ -1,0 +1,239 @@
+<style type="text/css">
+
+    .myinfo_info_doc_download , .myinfo_info_doc_upload, .myinfo_info_doc_delete {
+        width: 100px;
+        height: 30px;
+        text-align: center;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .myinfo_info_doc_download {
+        color: #ffffff;
+        background-color: #7147a9;
+        line-height: 30px;
+    }
+
+    .myinfo_info_doc_upload {
+        color: #7147a9;
+        border: 1px solid #7147a9;
+        background-color: white;
+        line-height: 30px;
+    }
+
+    .myinfo_info_doc_delete {
+        background-color: #707070;
+        color: #FFFFFF;
+        line-height: 30px;
+    }
+
+    .myinfo_info_company_doc_desc.desc {
+        margin-top : 0 !important;
+    }
+
+    .myinfo_info_cert_input {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+</style>
+
+<div id="section" class="page_content_body user">
+
+    <div class="gray_background">
+
+        <div class="container">
+
+            <article id="myinfo" class="floating_box">
+
+                <header class="myinfo_header">
+                    <h1 class="myinfo_header_h1">내정보</h1>
+                    <p class="myinfo_main_desc additional_notice">아래 정보를 모두 기재해주셔야 회원가입 완료, 교육신청이 가능합니다.<br/>본 정보를 기반으로 교육선정, 수료증 발급이 이루어집니다. 정확하게 기재하여 주세요.<br/>기재하신 정보가 사실과 다름이 확인 될 경우, 교육생 선정에 불이익이 있을 수 있습니다.</p>
+                </header>
+
+<!--                myinfo_icon-->
+<!--                <nav class="myinfo_select">-->
+<!--                    <div class="myinfo_select_basic selected_info">-->
+<!--                        기본 정보-->
+<!--                    </div>-->
+<!--                    <div class="myinfo_select_addition">-->
+<!--                        추가 정보-->
+<!--                    </div>-->
+<!--                </nav>-->
+
+                <section class="myinfo_input_form">
+
+                    <div class="myinfo_basic_input_form">
+                        <div class="myinfo_info_id">
+                            <p class="myinfo_info_id_desc">아이디</p>
+                            <input class="myinfo_info_id_input fw" type="text" disabled>
+                        </div>
+                        <div class="myinfo_info_pw">
+                            <p class="myinfo_info_pw_desc">비밀번호</p>
+                            <input class="myinfo_info_pw_input fw" type="password" placeholder="비밀번호 변경을 원하지 않으실 경우, 해당 칸을 입력하지 마세요.">
+                        </div>
+                        <div class="myinfo_info_pwcheck">
+                            <p class="myinfo_info_pwcheck_desc">비밀번호 재확인</p>
+                            <input class="myinfo_info_pwcheck_input fw" type="password" placeholder="비밀번호 변경을 원하지 않으실 경우, 해당 칸을 입력하지 마세요.">
+                        </div>
+                        <div class="myinfo_info_name">
+                            <p class="myinfo_info_name_desc">이름</p>
+                            <input class="myinfo_info_name_input fw" type="text" disabled>
+                        </div>
+                        <div class="myinfo_info_email">
+                            <p class="myinfo_info_email_desc">이메일</p>
+                            <input class="myinfo_info_email_input fw" type="text">
+                            <select class="myinfo_info_email_select">
+                                <option value="1" selected>직접입력</option>
+                                <option value="naver.com">naver.com</option>
+                                <option value="hanmail.net">hanmail.net</option>
+                                <option value="hotmail.com">hotmail.com</option>
+                                <option value="nate.com">nate.com</option>
+                                <option value="yahoo.co.kr">yahoo.co.kr</option>
+                                <option value="dreamwiz.com">dreamwiz.com</option>
+                                <option value="korea.com">korea.com</option>
+                                <option value="gmail.com">gmail.com</option>
+                            </select>
+                        </div>
+                        <div class="myinfo_info_birth">
+                            <p class="myinfo_info_birth_desc">생년월일(*수료증 발급 시 필요)</p>
+                            <select class="myinfo_info_birth_year_select" disabled></select>
+                            <select class="myinfo_info_birth_month_select" disabled></select>
+                            <select class="myinfo_info_birth_day_select" disabled></select>
+                        </div>
+                        <div class="myinfo_info_gender">
+                            <p class="myinfo_info_gender_desc">지정성별</p>
+                            <select class="myinfo_info_gender_select fw" disabled></select>
+                        </div>
+                        <div class="myinfo_info_phone">
+                            <p class="myinfo_info_phone_desc">휴대전화</p>
+                            <input type="text" class="myinfo_info_phone_input" disabled/>
+                        </div>
+
+                        <div class="myinfo_info_fieldInfo">
+                            <p class="myinfo_info_fieldInfo_desc_text">소속기관 정보</p>
+                            <!-- contents TODO -->
+
+                            <div class="myinfo_info_position">
+                                <p class="myinfo_info_position_desc">직위</p>
+                                <select class="myinfo_info_position_input fw"></select>
+                                <p class="myinfo_info_position_desc" style="color: #7147a9; margin-top : 10px;">(* 해바라기센터 부소장의 경우 기관장을 선택)</p>
+                            </div>
+
+                            <div class="myinfo_info_field">
+                                <p class="myinfo_info_field_desc">기관 유형</p>
+                                <select class="myinfo_info_field_depth1_input"></select>
+                                <select class="myinfo_info_field_depth2_input"></select>
+                            </div>
+
+                            <p class="myinfo_info_fieldInfo_sub_desc">기관명</p>
+                            <input type="text" class="myinfo_info_fieldName_input fw" placeholder="기관명 입력"/>
+
+                            <p class="myinfo_info_address_desc">기관 주소 <span style="color: #7147a9;">(교재가 발송되는 주소입니다.)</span></p>
+                            <input type="text" class="myinfo_info_address_input fw" style="cursor: pointer;" placeholder="클릭하여 주소 입력" readonly />
+                            <input type="text" class="myinfo_info_address2_input fw" style="cursor: pointer;" placeholder="상세 주소 입력" />
+
+
+                            <p class="myinfo_info_tel_desc">기관 연락처</p>
+                            <input type="number" class="myinfo_info_tel_input fw" placeholder="- 없이 숫자만 입력해주세요.">
+
+                            <div class="myinfo_info_support">
+                                <p class="myinfo_info_support_desc">국비(지방비) 지원여부</p>
+                                <div>
+                                    <label><input class="common_checkbox_radio" type="radio" name="support" value="1"><span>지원</span></label>
+                                </div>
+                                <div>
+                                    <label><input class="common_checkbox_radio" type="radio" name="support" value="0" checked><span>미지원</span></label>
+                                </div>
+                            </div>
+
+
+                            <div class="myinfo_info_career_desc_box">
+                                <p class="myinfo_info_career_desc_box_text">경력사항 및 자격증</p>
+                            </div>
+                            <div class="myinfo_info_career">
+                                <p class="myinfo_info_career_desc">여성폭력방지기관 총 경력사항</p>
+                                <select class="myinfo_info_career_input fw"></select>
+                            </div>
+
+                            <div class="myinfo_info_career2">
+                                <p class="myinfo_info_career_desc">현 기관 총 경력사항</p>
+                                <select class="myinfo_info_career_input_2 fw"></select>
+                            </div>
+
+                            <div class="myinfo_info_cert">
+                                <p class="myinfo_info_cert_desc">자격증</p>
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="가정폭력방지상담원"><span>가정폭력방지상담원</span></label></div>
+                                -->
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="가정폭력방지상담원">가정폭력방지상담원<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="성매매방지상담원">성매매방지상담원<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="성폭력방지상담원">성폭력방지상담원<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="사회복지사">사회복지사<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="정신건강사회복지사">정신건강사회복지사<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="직업상담사">직업상담사<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="청소년상담">청소년상담/지도사<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="기타">기타<span class="checkmark"></span></label>
+                                <label><input type="checkbox" name="depth2" value="depth1_2_1" data-val="none">해당사항없음<span class="checkmark"></span></label>
+
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="성매매방지상담원"><span>성매매방지상담원</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="성폭력방지상담원"><span>성폭력방지상담원</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="사회복지사"><span>사회복지사</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="정신건강사회복지사"><span>정신건강사회복지사</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="직업상담사"><span>직업상담사</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="청소년상담지도사"><span>청소년상담/지도사</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="기타"><span>기타</span></label></div>-->
+                                <!--                                <div><label><input class="myinfo_info_cert_input common_checkbox" type="checkbox" name="cert_info" data-val="none"><span>해당사항없음</span></label></div>-->
+                            </div>
+                        </div>
+
+
+                        <div class="myinfo_info_career_desc_box">
+                            <p class="myinfo_info_career_desc_box_text">현 소속기관 재직 확인 서류 제출</p>
+                        </div>
+                        <div class="myinfo_info_company_doc">
+                            <p class="myinfo_info_company_doc_desc"></p>
+                            <p class="myinfo_info_point">현 소속기관 재직 확인 서류를 제출하셔야 회원가입, 교육신청이 가능합니다.</p>
+                            <p class="myinfo_info_point">현 소속기관 재직확인이 가능한 공문을 첨부해 주세요.</p>
+                            <ul class="myinfo_info_box_list">
+                                <li class="myinfo_info_box_item point_red">주민번호 뒷자리 등 불필요한 개인정보는 삭제해주세요.(기재 시 삭제처리 됨)</li>
+                                <li class="myinfo_info_box_item">기관 소속 종사자가 여러 명일 경우,<br/>1개의 공문에 종사자를 모두 기입하시어 중복 사용하셔도 무방합니다.</li>
+                                <li class="myinfo_info_box_item">단, 공문 내용에 아래의 정보가 반드시 포함되어야 합니다.</li>
+                                <li class="myinfo_info_box_item point_red">[필수정보] ①성함 ②소속기관명 ③직위</li>
+                            </ul>
+                            <p class="myinfo_info_point last">서류 내용이 사실과 다름이 확인되었을 경우, 교육생 선정에 불이익이 있을 수 있습니다.</p>
+                            <p class="myinfo_info_point last">이미지 파일(jpg, jpeg, pdf, png, bmp) 형태로 첨부해 주십시오.</p>
+
+                            <input class="myinfo_info_company_doc_input fw" disabled>
+                            <p class="myinfo_desc_warning"></p>
+                            <div class="file_uploader"></div>
+                            <div class="myinfo_info_doc_download">다운로드</div>
+                            <div class="myinfo_info_doc_upload">파일첨부</div>
+                            <div class="myinfo_info_doc_delete">삭제</div>
+                        </div>
+
+                        <div id="confirm">
+                            완료
+                        </div>
+
+<!--                        <div id="to_additional">-->
+<!--                            다음-->
+<!--                        </div>-->
+                    </div>
+                    <div class="myinfo_additional_input_form hide">
+<!--                        <p class="myinfo_main_desc myinfo_icon additional_notice">교육신청 및 수료증 발급 시 필요한 정보입니다.<br/>정확하게 기재하여 주시기 바랍니다.</p>-->
+                    </div>
+                </section>
+                <div id="signout">
+                    <p class="signout_text">
+                        회원탈퇴 바로가기
+                    </p>
+                </div>
+
+
+            </article>
+        </div>
+
+
+    </div>
+</div>

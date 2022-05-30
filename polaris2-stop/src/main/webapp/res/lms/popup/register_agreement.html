@@ -1,0 +1,191 @@
+<style>
+
+    .register_agreement_popup {
+        min-width: 300px;
+    }
+
+    .register_agreement_popup > .register_agreement_popup_title {
+        height: 94px;
+        line-height: 100px;
+        font-family: notokr-bold, sans-serif;
+        background-color: #ffffff;
+        color: #232323;
+        padding-left: 30px;
+        padding-right: 30px;
+        font-size: 22px;
+        letter-spacing: -0.44px;
+        border-bottom: 2px solid #701e97;
+
+        text-overflow : ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        overflow: hidden;
+
+    }
+
+    .register_agreement_popup > .register_agreement_popup_title .register_agreement_popup_title_text {
+        width: 80% !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        word-wrap: normal;
+        display: inline-block;
+    }
+
+    .register_agreement_popup > .register_agreement_popup_title > img {
+        margin-top: 38px;
+        width: 22px;
+        cursor: pointer;
+    }
+
+    .register_agreement_popup > .register_agreement_popup_content {
+        background: #FFFFFF;
+        overflow: hidden;
+        color: #575757;
+        text-align: left;
+        font-size: 14px;
+        /*padding: 5px;*/
+    }
+
+    .register_agreement_popup_content > .agreement_content {
+        text-align: left;
+        margin: 30px;
+        padding: 30px;
+        border: 1px solid #cccccc;
+        max-height:400px;
+        overflow:auto;
+    }
+
+    .register_agreement_popup .alert_confirm_button {
+        height: 46px;
+        line-height: 46px;
+        padding: 0 42px;
+        font-size: 14px;
+        font-family: "notokr-medium, NanumGothicBold";
+        color: #ffffff;
+        background-color: #7147a9;
+        /*background-color: #2b364a;*/
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .register_agreement_popup .alert_cancel_button {
+        height: 46px;
+        line-height: 46px;
+        padding: 0 42px;
+        font-size: 14px;
+        font-family: "notokr-medium, NanumGothicBold";
+        color: #ffffff;
+        background-color: #777777;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .provide_text {
+        font-size: 15px;
+        margin-top: 15px;
+    }
+
+    .font_bold {
+        font-weight: bold;
+    }
+
+    .agreement_explanation {
+        /*border-left: 5px solid #2b364a;*/
+        padding: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-size: 15px;
+    }
+
+    .agreement_issues {
+        /*border: 2px solid #2b364a;*/
+        border-radius: 15px;
+        background-color: #f2f2f2;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .agreement_issues .dot {
+        font-size: 15px;
+        margin-right: 5px;
+    }
+
+    .alert_red_text {
+        color: #FF0000;
+        margin-top: 15px;
+        font-size: 15px;
+        font-weight: bold;
+    }
+
+    .alert_red_text p {
+        margin-bottom: 2px;
+    }
+
+    .radio_div {
+        text-align: center;
+        margin: 15px 0 30px 0;
+        height:26px;
+        line-height: 26px;
+    }
+
+    .radio_div img {
+        vertical-align: middle;
+        width: 20px;
+        margin-right: 10px;
+    }
+
+    .register_agreement_popup_content .alert_buttons {
+        text-align: center;
+        margin: 15px 0 0 0;
+        font-size: 0;
+    }
+
+    .register_agreement_popup_content .alert_buttons .button{
+        width: 50%;
+        height: 50px;
+        font-family: notokr-regular, sans-serif;
+        font-size: 16px;
+        letter-spacing: -0.32px;
+        color: white;
+    }
+    .register_agreement_popup_content .alert_buttons .button.alert_cancel_button{
+        background-color: #7147a9 !important;
+    }
+
+    .register_agreement_popup_content .alert_buttons .button.alert_cancel_button{
+        background-color: #cccccc !important;
+    }
+
+    .polaris_string {
+        font-family: notokr-regular,sans-serif;
+        font-size: 16px;
+        letter-spacing: -0.32px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .polaris_string.agree {
+        margin-right: 30px;
+    }
+
+</style>
+
+<div class="dim cancelable" data-lia-popup="{next-popup}"></div>
+<div class="register_agreement_popup popup" data-lia-dim="{prev-dim}" data-lia-position="absolute">
+    <div class="register_agreement_popup_title"><p class="register_agreement_popup_title_text"></p><img
+            src="/res/lms/popup/register_agreement_close.png" class="register_agreement_popup_close_button right"/></div>
+    <div class="register_agreement_popup_content" style="">
+        <div class="agreement_content">
+        </div>
+
+        <div class="radio_div">
+            <img class="image_button radio" data-lia-value="1" data-lia-group="agree" src="/res/lms/popup/register_agreement_checkbox.png"> <span class="polaris_string agree" data-polaris-string-key="BUTTON_TEXT.AGREE"></span> &nbsp;&nbsp;
+            <img class="image_button radio" data-lia-value="0" data-lia-group="agree" src="/res/lms/popup/register_agreement_checkbox.png"> <span class="polaris_string disagree" data-polaris-string-key="BUTTON_TEXT.DISAGREE"></span>
+        </div>
+        <div class="alert_buttons">
+            <div class="button alert_cancel_button polaris_string" data-polaris-string-key="BUTTON_TEXT.CANCEL"></div>
+            <div class="button alert_confirm_button agreed polaris_string" data-polaris-string-key="BUTTON_TEXT.CONFIRM"></div>
+        </div>
+    </div>
+</div>

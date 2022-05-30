@@ -1,0 +1,103 @@
+<style>
+
+
+    #pw_confirm {
+        margin: 0 auto;
+        width: 500px;
+        background-color:  #ffffff;
+        padding : 0 16px;
+        height:520px;
+    }
+
+    .course_search_header {
+        height: 60px;
+        line-height: 60px;
+        border-bottom: 1px solid #707070;
+        margin-bottom : 10px;
+    }
+    .course_search_popup_title {
+        width: 300px;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 20px;
+        letter-spacing: -0.4px;
+    }
+    .exit {
+        margin-top: 16px;
+        width: 24px;
+        height: 24px;
+        float: right;
+        display: inline-block;
+        vertical-align: middle;
+        background-image: url("/res/home/img/stop/common/btn_close.png");
+        background-size: cover;
+        cursor: pointer;
+    }
+
+
+    .bottom {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    #search_string_box {
+        border: 1px solid #EEEEEE;
+        width: 100%;
+        height: 40px;
+        padding-left: 8px;
+        margin-bottom: 10px;
+    }
+
+    .course_search_img {
+        width: 24px;
+        height: 24px;
+        display: inline-block;
+        vertical-align: middle;
+        position: absolute;
+        right: 30px;
+        bottom: 17px;
+    }
+
+    .terms {
+        overflow-y: scroll;
+        height: 400px;
+    }
+
+    .confirm {
+        width: 100%;
+        background-color: #7147a9;
+        color: #FFFFFF;
+        text-align: center;
+        line-height: 50px;
+        height: 50px;
+    }
+
+    @media screen and (max-width: 767px) {
+        #pw_confirm {width: 350px;}
+        .course_search_popup_title {width: 250px;}
+    }
+
+
+</style>
+
+
+
+
+<div id="course_search_popup_dim" class="dim" data-lia-popup="#course_search_popup"></div>
+<div id="course_search_popup" class="course_search_popup popup" data-lia-dim="#course_search_popup_dim">
+
+    <div id="pw_confirm" class="mbskin">
+
+        <div class="course_search_header">
+            <p class="course_search_popup_title">과정검색</p>
+            <span class="exit"></span>
+        </div>
+
+        <div class="bottom">
+            <div type="text" name="search_string" class="terms" size="20" maxlength="20" placeholder="검색어 입력">
+
+            </div>
+
+        </div>
+    </div>
+    <div class="confirm">확인</div>
+</div>

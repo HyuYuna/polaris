@@ -1,0 +1,184 @@
+
+<style type="text/css">
+
+    .normal_write { border-top:1px solid #707070; }
+
+    .normal_write .normal_write_body { color:#232323;font-family: notokr-regular;font-size:14px;padding:24px 28px;border-bottom:1px solid #707070; }
+
+    .normal_write .normal_write_line { position:relative; margin-bottom: 16px; }
+    .normal_write .normal_write_line .normal_write_line_key { color:#232323;font-family: notokr-medium;width:130px;position:absolute;left:0px;top:0;line-height:54px; }
+    .normal_write .normal_write_line .normal_write_line_value { color:#232323;font-family: notokr-medium;padding-left:140px;line-height:54px;}
+
+    .normal_write .normal_write_input {width: 100%;border: 1px solid #e5e5e5;box-sizing: border-box;font-size: 14px;font-family: notokr-regular;color: #707070;height: 54px;padding-left: 20px;padding-right: 20px;}
+    .normal_write .normal_write_select{ width:100%;border:1px solid #e5e5e5;box-sizing: border-box;font-size:14px;font-family: notokr-regular;color:#707070;height:54px;padding-left:20px;padding-right:20px;  background: url("/res/home/img/stop/common/opt_arr_down.png") no-repeat;background-size: 10px 6px; background-position: calc(100% - 16px) 50%;}
+    .normal_write .normal_write_radio_section { overflow:auto; display: inline-block; vertical-align: middle;}
+    .normal_write .normal_write_radio_section div { float:left; }
+    .normal_write .normal_write_radio_section .normal_write_radio_item {cursor:pointer; }
+    .normal_write .normal_write_radio_section .normal_write_radio { margin-top:15px;border-radius: 20px;border:5px solid #cccccc;width:18px;height:18px; }
+    .normal_write .normal_write_radio_section .normal_write_radio_item.on .normal_write_radio { border-color:#6f4dbb; }
+    .normal_write .normal_write_radio_section .normal_write_radio_text { color:#232323;font-size:14px;font-family: notokr-regular;margin-left:10px;margin-right:20px; }
+    .normal_write .write_password { display: inline-block; border-radius: 5px;}
+    .normal_write .write_password input { width: 100%;}
+    .normal_write .text_editor { width:100%; }
+
+    .normal_write .normal_write_line.attachment {display:none;}
+    .normal_write .normal_write_line.category {display:none;}
+    .normal_write .normal_write_line.body { padding-bottom:0; margin-bottom: 0;}
+
+    .page_content_button { margin-top:60px; margin-bottom:60px;overflow:auto; }
+
+    .page_content_button .page_content_button_confirm {
+        margin-left: 20px;
+        float: right;
+        width: 140px;
+        height: 56px;
+        font-family: notokr-regular;
+        color: #ffffff;
+        font-size: 16px;
+        text-align: center;
+        line-height: 56px;
+        background: #7147a9;
+        cursor: pointer;
+    }
+
+    .page_content_button .page_content_button_cancel {
+        float: right;
+        width: 140px;
+        height: 56px;
+        font-family: notokr-regular;
+        color: #ffffff;
+        font-size: 16px;
+        text-align: center;
+        line-height: 56px;
+        background: #cccccc;
+        box-sizing: border-box;
+        cursor: pointer;
+
+    }
+    .file_uploader_content{
+        font-size: 14px;
+        color: #888888;
+        line-height: 54px;
+        margin: 0 70px 0 16px;
+        font-family:'notokr-regular',Sans-Serif;
+    }
+    .file_uploader_item_name{
+        font-size: 14px;
+        line-height: 54px;
+        color: #232323;
+        margin-right: 8px;
+        font-family:'notokr-regular',Sans-Serif;
+    }
+
+    /* Mobile */
+    @media screen and (max-width:767px) {
+
+        .normal_write .normal_write_body { padding:20px 0px; }
+
+        .normal_write .normal_write_line .normal_write_line_key { position:relative;left:0px;top:0px;line-height:12px;font-size: 12px; margin-bottom: 18px; }
+        .normal_write .normal_write_line .normal_write_line_value {padding-left:0px; }
+        .page_content_button { margin-top:40px; margin-bottom:0px; }
+        .page_content_button .page_content_button_confirm {
+            margin-left: 10px;
+            float: right;
+            width: calc(50% - 5px);
+            height: 54px;
+            font-size: 14px;
+            line-height: 54px;
+        }
+
+        .page_content_button .page_content_button_cancel {
+            float: right;
+            width: calc(50% - 5px);
+            height: 54px;
+            font-size: 14px;
+            line-height: 54px;
+
+        }
+        .normal_write_line_key{ font-size: 12px!important;}
+    }
+
+    /* Tablet */
+    @media screen and (min-width:768px) and (max-width:1359px) {
+
+        .normal_write .normal_write_body {font-size:14px;}
+        .normal_write .normal_write_line .normal_write_line_key {font-size: 12px!important;}
+
+
+    }
+
+    /* PC */
+    @media screen and (min-width:1360px) {
+
+    }
+
+</style>
+
+<header class="page_header">
+    <div class="page_header_wrapper">
+        <h1 class="page_header_title"></h1>
+        <ul class="page_header_breadcrumb">
+        </ul>
+    </div>
+</header>
+
+<div class="page_content" style="position:relative;">
+<!--    <div class="page_content_menu_mobile">-->
+<!--        <div class="container"><span></span><img src="/res/service/img/department10/common/arr_white_down.png"/></div>-->
+<!--    </div>-->
+    <div class="page_content_menu_panel"></div>
+    <div class="container">
+        <div class="page_content_menu left pc_show">
+            <div class="depth1_title"><span></span></div>
+            <div class="page_sub_menu"></div>
+        </div>
+        <div class="page_content_wrapper">
+            <div class="page_content_header">
+                <div class="page_content_header_title"></div>
+                <div class="page_content_header_desc"></div>
+            </div>
+            <div class="page_content_container">
+                <div class="page_content_tab"></div>
+<!--                <div class="page_content_combobox"><span></span><img src="/res/service/img/department10/common/arr_menu2_down.png"/><select></select></div>-->
+                <div class="page_content_body">
+                    <p class="must_write_guide" style="margin-bottom: 5px;">1:1 문의게시판은 작성자와 운영자만 확인 가능합니다.</p>
+                    <p class="must_write_guide" style="margin-bottom: 15px;"><span class="must_write">*</span>표시는 필수 입력사항 입니다.</p>
+                    <div class="normal_write">
+                        <div class="normal_write_body">
+                            <div class="normal_write_line title">
+                                <div class="normal_write_line_key">제목<span class="must_write">*</span></div>
+                                <div class="normal_write_line_value"><input class="normal_write_input" placeholder="제목을 입력해 주십시오."/>
+                                </div>
+                            </div>
+
+                            <div class="normal_write_line category">
+                                <div class="normal_write_line_key">분류</div>
+                                <div class="normal_write_line_value"><select class="normal_write_select">
+                                    <optinn>선택</optinn>
+                                </select></div>
+                            </div>
+
+                            <div class="normal_write_line attachment">
+                                <div class="normal_write_line_key">첨부파일</div>
+                                <div class="normal_write_line_value">
+                                    <div class="file_uploader"></div>
+                                </div>
+                            </div>
+                            <div class="normal_write_line body">
+                                <div class="text_editor"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page_content_button">
+                        <div class="page_content_button_confirm">등록</div>
+                        <div class="page_content_button_cancel">취소</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

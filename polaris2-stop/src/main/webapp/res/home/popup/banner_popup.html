@@ -1,0 +1,129 @@
+<style>
+
+    /* container */
+    @media (min-width: 768px) {
+        .banner_popup {
+            /*border:6px solid #002f87;*/
+            overflow: hidden;
+            position: relative;
+            min-width: 210px;
+        }
+
+        .banner_popup .banner_popup_title {
+            cursor:move;
+            height: 5px;
+            line-height: 58px;
+            font-family: notokr-medium;
+            background-color: transparent;
+            color: #ffffff;
+            padding: 40px 40px 0px 40px;
+            margin-bottom: -87px;
+            position: absolute;
+            z-index: 100;
+            width: 420px;
+        }
+
+
+        .banner_popup .banner_popup_title .banner_popup_close_button {
+            width: 22px;
+        }
+
+        .banner_exit_bound {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 100%;
+            position: absolute;
+            right: 31px;
+            top: 31px;
+            cursor: pointer;
+        }
+
+        .banner_popup  .banner_popup_title > img {
+            /*! margin-top: 22px; */
+            cursor: pointer;
+            float: right;
+        }
+
+        .banner_popup  .banner_popup_content {
+            background: #FFFFFF;
+            overflow: hidden;
+            color: #575757;
+            text-align: left;
+            font-size: 14px;
+            font-family: notokr-medium, sans-serif;
+            /*min-height: 250px;*/
+        }
+
+        .banner_popup  .banner_popup_content img{
+            width: 500px;
+            cursor: pointer;
+        }
+
+        .banner_popup .banner_popup_bottom_bar {
+            background-color:white;
+            height: 50px;
+            line-height: 48px;
+            color:#ffffff;
+            font-family: notokr-regular, sans-serif;
+            font-size:0px;
+        }
+
+        .banner_popup  .banner_popup_bottom_bar div {
+            box-sizing: border-box;
+            cursor:pointer;
+            width: 50%;
+            font-size:14px;
+            text-align: center;
+            display: inline-block;
+            color: black;
+            vertical-align: top;
+            border: 1px solid #e5e5e5;
+        }
+
+        .banner_popup  .banner_popup_bottom_bar .banner_popup_never_button{
+            border-right: none;
+        }
+
+        .banner_popup  img {
+            display: block;
+        }
+
+        .banner_popup_title_text {
+            display:inline-block;
+            max-width:90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    @media (max-width: 767px) {
+        .banner_popup, .banner_popup * {
+            display: none;
+        }
+    }
+
+
+
+
+
+</style>
+
+<div class="banner_popup popup no_adjust"  data-lia-position="absolute"  data-lia-position-top="10px" data-lia-position-left="10px">
+    <div class="banner_popup_title">
+<!--        <span class="banner_popup_title_text" style="float: left;"></span>-->
+<!--        <img src="/res/service/popup/banner_popup_close.png" class="banner_popup_close_button right"/>-->
+    </div>
+<!--        <div class="banner_exit_bound"></div>-->
+    <div class="banner_popup_content" style="text-align: left;">
+    </div>
+    <div class="banner_popup_bottom_bar">
+        <div class="banner_popup_never_button">
+            오늘 하루 열지 않기
+        </div>
+        <div class="banner_popup_close_button">
+            닫기
+        </div>
+    </div>
+</div>

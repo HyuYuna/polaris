@@ -1,0 +1,675 @@
+.board_content {overflow-y: auto;}
+
+#my_course .item_course {overflow:hidden;}
+#my_course .item_course:hover div {text-decoration: underline;cursor: pointer;}
+
+
+.cf:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+#notice .item_notice.btn:hover div { cursor:pointer; text-decoration: underline; }
+#notice .item_notice > div.tit { font-family: notokr-medium, NanumGothicBold; }
+
+#site_panel { position:relative;background-color:#fff;float:left;line-height:55px;width:100%;border:1px solid #e1e1e1;border-radius: 5px;margin-top:20px;padding-left:20px;padding-right:20px;-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box; }
+#site_panel > div { float:left; }
+#site_panel > .site_department_combobox { float:left;margin-top:11px;margin-right:10px; }
+#site_panel > .site_family_combobox { float:left;margin-top:11px;margin-bottom:11px; }
+#site_panel > .site_department_title {  font-family: notokr-medium, NanumGothicBold;padding-right:20px; }
+#site_panel > .site_family_title {  font-family: notokr-medium, NanumGothicBold;padding-left:20px;padding-right:20px; }
+
+.this_header { background-color:#f7f7f7;font-family: notokr-medium, NanumGothicBold; }
+#calendar .part_harf:first-child{ background-color:#f7f7f7; }
+
+@media screen and (min-width: 1601px) {
+
+    .home_page {overflow-y: auto;min-height:1000px;padding-right:380px;}
+
+    #learning_graph {height:341px;}
+    .vertical_chart {position:relative;height:120px;margin:40px 20px;border-top:1px solid #929cb9}
+    .vertical_chart .txt_completed {display:inline-block;position:absolute;left:0;top:-8px;width:50px;background:#fff;color:#253a73;z-index:10;font-size:13px;}
+    .vertical_chart .completed_line {position:absolute;top:5px;left:0;right:0;;}
+    .vertical_chart .line {position:absolute;left:0;right:0;border-top:1px dashed #e0e0e0;}
+    .vertical_chart .line.no1 {bottom:90px;}
+    .vertical_chart .line.no2 {bottom:60px;}
+    .vertical_chart .line.no3 {bottom:30px;}
+    .vertical_chart .line.no4 {bottom:0;}
+    .vertical_chart .stick {position:absolute;left:50%;margin-left: -10px;bottom:0;width:20px;border-radius: 20px;z-index:10;background: #e0e0e0}
+    .vertical_chart .stick .fill {
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        border-radius: 20px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#33c3cd+0,3558ac+100 */
+        background: #33c3cd; /* Old browsers */
+        background: -moz-linear-gradient(top, #33c3cd 0%, #3558ac 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #33c3cd 0%,#3558ac 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #33c3cd 0%,#3558ac 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33c3cd', endColorstr='#3558ac',GradientType=0 ); /* IE6-9 */
+    }
+    .vertical_chart .empty {background: #e0e0e0;}
+    .vertical_chart .stick_group {position:absolute;width:80px;height:120px;}
+    /*.vertical_chart .stick_group.test {left:6%}*/
+    /*.vertical_chart .stick_group.assignment {left:25%}*/
+    /*.vertical_chart .stick_group.quiz {left:44%}*/
+    /*.vertical_chart .stick_group.forum {left:63%}*/
+    /*.vertical_chart .stick_group.live {left:82%}*/
+    .vertical_chart .stick_info {position:absolute;bottom:-90px;left:50%;margin-left:-50px;width:100px;height:45px;padding-top:3px;background-size:100% 45px;font-size:13px;text-align: center;box-sizing: border-box}
+    .vertical_chart .stick_info.empty {color: #999;}
+    .vertical_chart .stick_info span {font-family:notokr-medium, NanumGothicBold;color:#20beca;}
+    .vertical_chart .name {position:absolute;bottom:-40px;width:80px;font-size:13px;text-align: center;}
+    /*.vertical_chart .name.test {left:6%}*/
+    /*.vertical_chart .name.assignment {left:25%}*/
+    /*.vertical_chart .name.quiz {left:44%}*/
+    /*.vertical_chart .name.forum {left:63%}*/
+    /*.vertical_chart .name.live {left:82%}*/
+
+    .this_header {height:55px;padding:0 20px;border-bottom:1px solid #e1e1e1;font-size:18px;line-height:55px;color:#000;}
+    .this_header .not_answer {display:inline-block;height:25px;margin-left:10px;padding:0 10px;border:1px solid #aaaaaa;border-radius: 20px;font-size:13px;color:#aaaaaa;text-align: center;line-height:25px;vertical-align: middle;}
+    .this_header .not_answer span {color:#20beca;vertical-align: middle;}
+    .this_header img {float:right;margin: 19px 0;cursor:pointer;}
+    .board_ul {display: inline-block;width: 100%;min-height:280px;padding:15px;text-align: center;box-sizing: border-box}
+    .board_ul li {overflow:hidden;float:left;width:100%;height:50px;line-height:25px;}
+    .board_ul li div {float:left;height:50px;padding:15px 4px ;line-height:25px;box-sizing: border-box}
+    .board_ul li div strong {margin-right:5px;}
+    .board_ul .title {overflow:hidden;width:60%;text-overflow:ellipsis;white-space:nowrap;text-align: left;}
+    .board_ul .status {width:16%;}
+    .board_ul .status span {display:inline-block;width:68px;height:25px;border-radius:20px;text-align: center;line-height:23px;box-sizing: border-box}
+    .board_ul .status span.status1 {border:1px solid #aaaaaa;background: #f6f6f6;color:#aaaaaa}
+    .board_ul .status span.status2 {border:1px solid #20beca;background: #e8f8fa;color:#20beca}
+    .board_ul .writer {width:11%;}
+    .board_ul .date {width:13%;padding-right:0;color:#aaaaaa;}
+
+    #section1 > div,
+    #section2 > div,
+    #section3 > div,
+    #section4 > div {border-radius: 5px;border:1px solid #e1e1e1;background: #fff;box-sizing: border-box}
+
+    #section1 {float:left;width:50%;padding-right:10px;box-sizing: border-box}
+    #section2 {float:left;width:50%;padding-left:10px;box-sizing: border-box}
+    #section3 {position:absolute;right:20px;width:360px;height:100%;}
+    #section4 {float:left;width:100%;}
+
+    #calendar .nav_calendar {height:20px;padding:47px 0;text-align: center;font-size:22px;font-family:notokr-medium, NanumGothicBold}
+    #calendar .nav_calendar img {margin:4px 50px;vertical-align: middle;cursor:pointer;}
+    #calendar .day_header {margin-bottom:25px;padding:0 25px;}
+    #calendar .day_header > div {float:left;width:14.28%;text-align: center;box-sizing: border-box}
+    #calendar .day_list {min-height: 330px;padding:0 25px;}
+    /*#calendar .day_list > div {height:60px;}*/
+    #calendar .day_list > div > div {float:left;width:9%;height:30px;margin:0 2.64% 25px;border-radius:30px;text-align: center;line-height:30px;box-sizing: border-box;cursor: pointer;}
+    #calendar .day_list > div > div.today {color:#fff;background:#253a73;}
+    #calendar .day_list > div > div.has_schedule {border:1px solid #b1b1b1;}
+    #calendar .sun {color:#b36364;}
+    #calendar .sat{color:#677195;}
+    #calendar .schedule_header {height:30px;padding:14px 20px;border-top:1px solid #e1e1e1;border-bottom:1px solid #e1e1e1;font-size:15px;line-height:30px;}
+    #calendar .schedule_header .add_schedule {display:inline-block;float:right;width:88px;height:30px;border-radius:20px;border:1px solid #253a73;font-size:13px;box-sizing: border-box;line-height:28px;color:#253a73;text-align: center;cursor:pointer;}
+    #calendar .list_schedule {overflow-y:scroll;height:462px;}
+    #calendar .item_schedule {height:42px;margin:30px;padding-left:30px;}
+    #calendar .item_schedule.public {background: url(/res/cms/img/common/bu_calendar_blue.png) no-repeat left center;}
+    #calendar .item_schedule.private {background: url(/res/cms/img/common/bu_calendar_red.png) no-repeat left center;}
+    #calendar .item_schedule > div {float:left;height:100%;}
+    #calendar .item_schedule .box1 {width:18%;margin-right:2%;text-align: center;}
+    #calendar .item_schedule .box1 .day_num {margin-bottom:3px;font-size:22px;font-family: notokr-medium, NanumGothicBold}
+    #calendar .item_schedule .box1 .day_string {color:#989898}
+    #calendar .item_schedule .box2 {width:80%;}
+    #calendar .item_schedule .box2 .tit {overflow: hidden;margin-top: 5px;margin-bottom:10px;text-overflow: ellipsis;white-space:nowrap;color:#000;}
+    #calendar .item_schedule .box2 .time {color:#6e6e6e}
+
+    #my_course {overflow-y: auto;margin-top:20px;font-size:14px;}
+    #my_course .box_left, #my_course .box_right {overflow-y: auto;float:left;height:587px;}
+    #my_course .box_left {width:30%;padding:30px;border-right:1px solid #e1e1e1;box-sizing: border-box;text-align: center;display:none;}
+    #my_course .box_left .icon_book {display:inline-block;width:123px;height:123px;margin-bottom:20px;border:1px solid #e1e1e1;border-radius:100px;background-position:center;background-image: url(/res/cms/img/home/img_subject.png);background-repeat: no-repeat;background-color: #fbfbfb;}
+    #my_course .box_left .term_name {margin-top:10px;color:#b7b7b7;}
+    #my_course .box_right {width:100%;}
+    #my_course .box_right .thead_course {overflow-y: auto;background: #f6f6f6;color:#808080;font-family: notokr-medium, NanumGothicBold}
+    #my_course .thead_course div,
+    #my_course .item_course > div {float:left;height:49px;border-bottom:1px solid #e1e1e1;line-height:49px;text-align: center;}
+    #my_course .thead_course div,
+    #my_course .box_right > div > div:first-child {border-top:none;}
+    #my_course .category {width:14%;}
+    #my_course .major {width:14%;}
+    #my_course .name {width:24%;}
+    /*#my_course .count {width:10%;}*/
+    #my_course .degree {width:7%;}
+    #my_course .attendance_item {width:4.4%}
+    #my_course .attendance_item_padding {width:3%}
+    #my_course .process {width:54%;padding-right:3%;}
+    .student_button {color:#ffffff;background-color:#9d1c20;border-radius:5px;width:84px;margin-right:10px;height:34px;line-height:34px;text-align:center;cursor:pointer;}
+    .admin_button {color:#ffffff;background-color:#384b7f;border-radius:5px;width:84px;height:34px;line-height:34px;text-align:center;cursor:pointer;}
+    #my_course .process span {display:inline-block;float:left;width:20%;text-align: center;vertical-align: middle}
+    #my_course .process .total {overflow:hidden;float:left;width:80%;height:10px;margin:20px 0;border-radius: 20px;background: #e0e0e0;}
+    #my_course .process .done {
+        display:inline-block;
+        float:left;
+        height:100%;
+        border-radius: 20px;
+        background: rgb(253,151,138);
+        background: linear-gradient(90deg, rgba(253,151,138,1) 0%, rgba(248,121,146,1) 100%);
+    }
+
+    #notice {}
+    #notice .this_header {border-bottom: 1px solid #e1e1e1;}
+    #notice .category_notice {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #notice .category_notice li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;font-size:14px;box-sizing: border-box}
+    #notice .category_notice li:hover {text-decoration: underline}
+    #notice .category_notice li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #notice .list_notice {overflow-y: auto;min-height: 231px;}
+    #notice .item_notice {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    /*#notice .item_notice:first-child {margin-top:8px;}*/
+    #notice .item_notice.always_top {font-family: notokr-medium, NanumGothicBold}
+    #notice .item_notice > div {float:left;height:100%;text-align: center}
+    #notice .item_notice > div img {vertical-align: middle}
+    #notice .item_notice > div.no {width:10%;}
+    #notice .item_notice > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #notice .item_notice > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #notice .item_notice > div.date {width:20%;color:#6e6e6e;}
+
+    #qna {}
+    #qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #qna .category_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #qna .category_qna li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;font-size:14px;box-sizing: border-box}
+    #qna .category_qna li:hover {text-decoration: underline}
+    #qna .category_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #qna .list_qna {overflow-y: auto;min-height: 231px;}
+    #qna .item_qna {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    /*#qna .item_qna:first-child {margin-top:8px;}*/
+    #qna .item_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #qna .item_qna > div {float:left;height:100%;text-align: center}
+    #qna .item_qna > div img {vertical-align: middle}
+    #qna .item_qna > div.no {width:10%;}
+    #qna .item_qna > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #qna .item_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #qna .item_qna > div.date {width:20%;color:#6e6e6e;}
+
+    #course_qna {}
+    #course_qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #course_qna .category_course_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #course_qna .category_course_qna li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;font-size:14px;box-sizing: border-box}
+    #course_qna .category_course_qna li:hover {text-decoration: underline}
+    #course_qna .category_course_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #course_qna .list_course_qna {overflow-y: auto;min-height: 231px;}
+    #course_qna .item_course_qna {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    /*#course_qna .item_course_qna:first-child {margin-top:8px;}*/
+    #course_qna .item_course_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #course_qna .item_course_qna > div {float:left;height:100%;text-align: center}
+    #course_qna .item_course_qna > div img {vertical-align: middle}
+    #course_qna .item_course_qna > div.no {width:10%;}
+    #course_qna .item_course_qna > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #course_qna .item_course_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #course_qna .item_course_qna > div.date {width:20%;color:#6e6e6e;}
+
+    #complete_condition {box-sizing: border-box}
+    #complete_condition .box_graph {display:inline-block;float:left;width:50%;height:100%;}
+    #complete_condition .cf {margin-bottom: 50px;}
+    #complete_condition .cf .left {margin-left: 30px;}
+    #complete_condition .cf .left p {margin-top: 50px;}
+    .c100 {}
+    .item_process {height:100px;}
+    .item_process .tit_process {margin-bottom:20px;text-align: left;}
+    .item_process .total {overflow:hidden;height:12px;margin-bottom:5px;border-radius: 20px;background: #e0e0e0}
+    .item_process .percent {display:inline-block;float: left;height:100%;border:20px;}
+    .item_process .bar_status {}
+    .item_process .percent {border-radius: 20px;background: #f87992}
+    .item_process .bar_status .left {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+    .item_process .bar_status .right {color:#aaa;}
+    .item_process .bar_status .right span {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+
+}
+
+@media screen and (min-width: 768px) and (max-width: 1600px) {
+
+    #learning_graph {height:341px;}
+    .vertical_chart {position:relative;height:120px;margin:40px 20px;border-top:1px solid #929cb9}
+    .vertical_chart .txt_completed {display:inline-block;position:absolute;left:0;top:-8px;width:50px;background:#fff;color:#253a73;font-size:13px;}
+    .vertical_chart .completed_line {position:absolute;top:5px;left:0;right:0;;}
+    .vertical_chart .line {position:absolute;left:0;right:0;border-top:1px dashed #e0e0e0;}
+    .vertical_chart .line.no1 {bottom:90px;}
+    .vertical_chart .line.no2 {bottom:60px;}
+    .vertical_chart .line.no3 {bottom:30px;}
+    .vertical_chart .line.no4 {bottom:0;}
+    .vertical_chart .stick {position:absolute;left:50%;margin-left: -10px;bottom:0;width:20px;border-radius: 20px;background: #e0e0e0}
+    .vertical_chart .stick .fill {
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        border-radius: 20px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#33c3cd+0,3558ac+100 */
+        background: #33c3cd; /* Old browsers */
+        background: -moz-linear-gradient(top, #33c3cd 0%, #3558ac 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #33c3cd 0%,#3558ac 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #33c3cd 0%,#3558ac 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33c3cd', endColorstr='#3558ac',GradientType=0 ); /* IE6-9 */
+    }
+    .vertical_chart .empty {background: #e0e0e0;}
+    .vertical_chart .stick_group {position:absolute;width:80px;height:120px;}
+    /*.vertical_chart .stick_group.test {left:6%}*/
+    /*.vertical_chart .stick_group.assignment {left:25%}*/
+    /*.vertical_chart .stick_group.quiz {left:44%}*/
+    /*.vertical_chart .stick_group.forum {left:63%}*/
+    /*.vertical_chart .stick_group.live {left:82%}*/
+    .vertical_chart .stick_info {position:absolute;bottom:-90px;left:50%;margin-left:-50px;width:100px;height:45px;padding-top:3px;background-size:100% 45px;font-size:13px;text-align: center;box-sizing: border-box}
+    .vertical_chart .stick_info.empty {color: #999;}
+    .vertical_chart .stick_info span {font-family:notokr-medium, NanumGothicBold;color:#20beca;}
+    .vertical_chart .name {position:absolute;bottom:-40px;width:80px;font-size:13px;text-align: center;}
+    /*.vertical_chart .name.test {left:6%}*/
+    /*.vertical_chart .name.assignment {left:25%}*/
+    /*.vertical_chart .name.quiz {left:44%}*/
+    /*.vertical_chart .name.forum {left:63%}*/
+    /*.vertical_chart .name.live {left:82%}*/
+
+    .this_header {height:55px;padding:0 20px;border-bottom:1px solid #e1e1e1;font-size:18px;line-height:55px;color:#000;}
+    .this_header .not_answer {display:inline-block;height:25px;margin-left:10px;padding:0 10px;border:1px solid #aaaaaa;border-radius: 20px;font-size:13px;color:#aaaaaa;text-align: center;line-height:25px;vertical-align: middle;}
+    .this_header .not_answer span {color:#20beca;vertical-align: middle;}
+    .this_header img {float:right;margin: 19px 0;cursor:pointer;}
+    .board_ul {display: inline-block;width: 100%;min-height:280px;padding:15px;text-align: center;box-sizing: border-box}
+    .board_ul li {overflow:hidden;float:left;width:100%;height:50px;line-height:25px;}
+    .board_ul li div {float:left;height:50px;padding: 15px 10px;line-height:25px;box-sizing: border-box}
+    .board_ul li div strong {margin-right:5px;}
+    .board_ul .title {overflow:hidden;width:66%;text-overflow:ellipsis;white-space:nowrap;text-align: left;}
+    .board_ul .status {width:13%;}
+    .board_ul .status span {display:inline-block;width:68px;height:25px;border-radius:20px;text-align: center;line-height:23px;box-sizing: border-box}
+    .board_ul .status span.status1 {border:1px solid #aaaaaa;background: #f6f6f6;color:#aaaaaa}
+    .board_ul .status span.status2 {border:1px solid #20beca;background: #e8f8fa;color:#20beca}
+    .board_ul .writer {width:8%;}
+    .board_ul .date {width:13%;color:#aaaaaa;}
+
+    #section1 > div,
+    #section2 > div,
+    #section3 > div,
+    #section4 > div {border-radius: 5px;border:1px solid #e1e1e1;background: #fff;box-sizing: border-box}
+
+    #section1 {margin-bottom:20px;}
+    #section2 {margin-bottom:20px;}
+
+    #calendar {height:475px;}
+    #calendar .part_harf {float:left;width:50%;height:100%;box-sizing: border-box}
+    #calendar .part_harf:first-child {border-right:1px solid #e1e1e1}
+    #calendar .nav_calendar {height:20px;padding:65px 0 55px;text-align: center;font-size:22px;font-family:notokr-medium, NanumGothicBold}
+    #calendar .nav_calendar img {margin:4px 50px;vertical-align: middle;cursor:pointer;}
+    #calendar .day_header {padding:0 25px;}
+    #calendar .day_header > div {float:left;width:14.28%;text-align: center;box-sizing: border-box}
+    #calendar .day_list {padding:0 25px;}
+    #calendar .day_list > div {height:52px;}
+    #calendar .day_list > div > div {float:left;width:9%;height:30px;margin:10px 2.64%;border-radius:30px;text-align: center;line-height:30px;box-sizing: border-box;cursor: pointer;}
+    #calendar .day_list > div > div.today {color:#fff;background:#253a73;}
+    #calendar .day_list > div > div.has_schedule {border:1px solid #b1b1b1;}
+    #calendar .sun {color:#b36364;}
+    #calendar .sat{color:#677195;}
+    #calendar .schedule_header {height:30px;padding:14px 20px;border-bottom:1px solid #e1e1e1;font-size:15px;line-height:30px;}
+    #calendar .schedule_header .add_schedule {display:inline-block;float:right;width:88px;height:30px;border-radius:20px;border:1px solid #253a73;font-size:13px;box-sizing: border-box;line-height:28px;color:#253a73;text-align: center;cursor:pointer;}
+    #calendar .list_schedule {overflow-y:scroll;height:414px;}
+    #calendar .item_schedule {height:42px;margin:30px;padding-left:30px;}
+    #calendar .item_schedule.public {background: url(/res/cms/img/common/bu_calendar_blue.png) no-repeat left center;}
+    #calendar .item_schedule.private {background: url(/res/cms/img/common/bu_calendar_red.png) no-repeat left center;}
+    #calendar .item_schedule > div {float:left;height:100%;}
+    #calendar .item_schedule .box1 {width:18%;margin-right:2%;text-align: center;}
+    #calendar .item_schedule .box1 .day_num {margin-bottom:3px;font-size:22px;font-family: notokr-medium, NanumGothicBold}
+    #calendar .item_schedule .box1 .day_string {color:#989898}
+    #calendar .item_schedule .box2 {width:80%;}
+    #calendar .item_schedule .box2 .tit {overflow: hidden;margin-top: 5px;margin-bottom:10px;text-overflow: ellipsis;white-space:nowrap;color:#000;}
+    #calendar .item_schedule .box2 .time {color:#6e6e6e}
+
+    #my_course {overflow-y: auto;margin-top:20px;font-size:14px;}
+    #my_course .box_left {display:none;}
+    #my_course .box_left, #my_course .box_right {overflow:auto;}
+    #my_course .box_left {padding:30px;box-sizing: border-box;text-align: center;}
+    #my_course .box_left .icon_book {display:inline-block;width:123px;height:123px;margin-bottom:20px;border:1px solid #e1e1e1;border-radius:100px;background-position:center;background-image: url(/res/cms/img/home/img_subject.png);background-repeat: no-repeat;background-color: #fbfbfb;}
+    #my_course .box_left .term_name {margin-top:10px;color:#b7b7b7;}
+    #my_course .box_right {}
+    #my_course .box_right .thead_course {overflow-y: auto;background: #f6f6f6;color:#808080;font-family: notokr-medium, NanumGothicBold;border-bottom: 1px solid #e1e1e1; border-top: 1px solid #e1e1e1;}
+    #my_course .thead_course div,
+    #my_course .item_course > div {float:left;height:49px;border-bottom:1px solid #e1e1e1;line-height:49px;text-align: center;}
+    #my_course .thead_course div,
+    #my_course .box_right > div > div:first-child {border-top:none;}
+    #my_course .category {width:24%;}
+    #my_course .major {width:23%;}
+    #my_course .name {width:23%;}
+    #my_course .process {width:43%;padding-right:3%}
+
+    #my_course .attendance_item {width:5%}
+    #my_course .attendance_item_padding {width:2%}
+
+    .student_button {
+        color:#ffffff;background-color:#9d1c20;border-radius:5px;width:84px;margin-right:10px;height:34px;line-height:34px;text-align:center;cursor:pointer;
+    }
+    .admin_button {
+        color:#ffffff;background-color:#384b7f;border-radius:5px;width:84px;height:34px;line-height:34px;text-align:center;cursor:pointer;
+    }
+    #my_course .process span {display:inline-block;float:left;width:35%;text-align: center;vertical-align: middle}
+    #my_course .process .total {overflow:hidden;float:left;width:65%;height:10px;margin:20px 0;border-radius: 20px;background: #e0e0e0;}
+    #my_course .process .done {
+        display:inline-block;
+        float:left;
+        height:100%;
+        border-radius: 20px;
+        background: rgb(253,151,138);
+        background: linear-gradient(90deg, rgba(253,151,138,1) 0%, rgba(248,121,146,1) 100%);
+    }
+
+    #notice {overflow-y: auto;margin-top:20px;}
+    #notice .this_header {border-bottom: 1px solid #e1e1e1;}
+    #notice .category_notice {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #notice .category_notice li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #notice .category_notice li:hover {text-decoration: underline}
+    #notice .category_notice li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #notice .list_notice {overflow-y: auto;margin-top: -3px;min-height: 220px;}
+    #notice .item_notice {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    #notice .item_notice.always_top {font-family: notokr-medium, NanumGothicBold}
+    #notice .item_notice > div {float:left;height:100%;text-align: center}
+    #notice .item_notice > div img {vertical-align: middle}
+    #notice .item_notice > div.no {width:5%;}
+    #notice .item_notice > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #notice .item_notice > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #notice .item_notice > div.date {width:20%;color:#6e6e6e;}
+
+    #qna {overflow-y: auto;margin-top:20px;}
+    #qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #qna .category_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #qna .category_qna li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #qna .category_qna li:hover {text-decoration: underline}
+    #qna .category_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #qna .list_qna {overflow-y: auto;margin-top: -3px;min-height: 220px;}
+    #qna .item_qna {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    #qna .item_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #qna .item_qna > div {float:left;height:100%;text-align: center}
+    #qna .item_qna > div img {vertical-align: middle}
+    #qna .item_qna > div.no {width:5%;}
+    #qna .item_qna > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #qna .item_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #qna .item_qna > div.date {width:20%;color:#6e6e6e;}
+
+    #course_qna {overflow-y: auto;margin-top:20px;}
+    #course_qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #course_qna .category_course_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #course_qna .category_course_qna li {height:50px;margin-right:20px;border-bottom:1px solid #fff;line-height:50px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #course_qna .category_course_qna li:hover {text-decoration: underline}
+    #course_qna .category_course_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #course_qna .list_course_qna {overflow-y: auto;margin-top: -3px;min-height: 220px;}
+    #course_qna .item_course_qna {padding:10px 0;height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;}
+    #course_qna .item_course_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #course_qna .item_course_qna > div {float:left;height:100%;text-align: center}
+    #course_qna .item_course_qna > div img {vertical-align: middle}
+    #course_qna .item_course_qna > div.no {width:5%;}
+    #course_qna .item_course_qna > div.tit {overflow:hidden;width:70%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #course_qna .item_course_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+    #course_qna .item_course_qna > div.date {width:20%;color:#6e6e6e;}
+
+    #complete_condition {box-sizing: border-box}
+    #complete_condition .content {height:270px;padding:30px;box-sizing: border-box}
+    #complete_condition .box_graph {display:inline-block;float:left;width:50%;height:100%;}
+    .item_process {height:120px;}
+    .item_process .tit_process {margin-bottom:20px;text-align: left;}
+    .item_process .total {overflow:hidden;height:12px;margin-bottom:5px;border-radius: 20px;background: #e0e0e0}
+    .item_process .percent {display:inline-block;float: left;height:100%;border:20px;}
+    .item_process .bar_status {}
+    .item_process .percent {border-radius: 20px;background: #f87992}
+    .item_process .bar_status .left {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+    .item_process .bar_status .right {color:#aaa;}
+    .item_process .bar_status .right span {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+    #complete_condition .cf {text-align:center;float: left;width: 45%;margin-right: 5%;}
+    #complete_condition .cf .c100 {margin: 0 auto;float: none;}
+    #complete_condition .cf .left {width:100%;}
+    #complete_condition .cf .left p {margin-top: 15px;}
+
+}
+
+@media screen and (max-width: 767px) {
+
+    #learning_graph {height:341px;}
+    .vertical_chart {position:relative;height:120px;margin:40px 20px;border-top:1px solid #929cb9}
+    .vertical_chart .txt_completed {display:inline-block;position:absolute;left:0;top:-8px;width:50px;background:#fff;color:#253a73;font-size:13px;}
+    .vertical_chart .completed_line {position:absolute;top:5px;left:0;right:0;;}
+    .vertical_chart .line {position:absolute;left:0;right:0;border-top:1px dashed #e0e0e0;}
+    .vertical_chart .line.no1 {bottom:90px;}
+    .vertical_chart .line.no2 {bottom:60px;}
+    .vertical_chart .line.no3 {bottom:30px;}
+    .vertical_chart .line.no4 {bottom:0;}
+    .vertical_chart .stick {position:absolute;left:50%;margin-left: -10px;bottom:0;width:20px;border-radius: 20px;background: #e0e0e0}
+    .vertical_chart .stick .fill {
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        border-radius: 20px;
+        /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#33c3cd+0,3558ac+100 */
+        background: #33c3cd; /* Old browsers */
+        background: -moz-linear-gradient(top, #33c3cd 0%, #3558ac 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #33c3cd 0%,#3558ac 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #33c3cd 0%,#3558ac 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#33c3cd', endColorstr='#3558ac',GradientType=0 ); /* IE6-9 */
+    }
+    .vertical_chart .empty {background: #e0e0e0;}
+    .vertical_chart .stick_group {position:absolute;width:20%;height:120px;}
+    /*.vertical_chart .stick_group.test {left:0;}*/
+    /*.vertical_chart .stick_group.assignment {left:20%}*/
+    /*.vertical_chart .stick_group.quiz {left:40%}*/
+    /*.vertical_chart .stick_group.forum {left:60%}*/
+    /*.vertical_chart .stick_group.live {left:80%}*/
+    .vertical_chart .stick_info {position:absolute;bottom:-90px;left:50%;margin-left:-50px;width:100px;height:45px;padding-top:3px;background-size:100% 45px;font-size:13px;text-align: center;box-sizing: border-box}
+    .vertical_chart .stick_info.empty {display:none;color: #999;}
+    .vertical_chart .stick_info span.test {left:0;}
+    /*. {font-family:notokr-medium, NanumGothicBold;color:#20beca;}
+    .vertical_chart .name {position:absolute;bottom:-40px;width:20%;font-size:11px;text-align: center;}
+    /*.vertical_chart .navertical_chart .name.assignment {left:20%}*/
+    /*.vertical_chart .name.quiz {left:40%}*/
+    /*.vertical_chart .name.forum {left:60%}*/
+    /*.vertical_chart .name.live {left:80%}*/
+
+    .this_header {height:38px;padding:0 20px;border-bottom:1px solid #e1e1e1;font-size:14px;line-height:40px;color:#000;}
+    .this_header .not_answer {display:inline-block;width:17px;height:17px;margin-left:5px;border:1px solid #aaaaaa;border-radius: 20px;font-size:12px;color:#fff;background:#aaaaaa;text-align: center;line-height:17px;vertical-align: middle;}
+    .this_header img {float:right;margin: 11px 0;cursor:pointer;}
+    .board_ul {display: inline-block;width: 100%;padding:15px;box-sizing: border-box}
+    .board_ul li {float:left;position:relative;width:100%;height:50px;margin-bottom:20px;line-height:25px;}
+    .board_ul li div {float:left;line-height:25px;box-sizing: border-box;letter-spacing:-1px;}
+    .board_ul li div strong {margin-right:5px;}
+    .board_ul .title {overflow:hidden;width:100%;margin-bottom:5px;text-overflow:ellipsis;white-space:nowrap;text-align: left;color:#000;}
+    .board_ul .status {position:absolute;bottom:-5px;right:0;}
+    .board_ul .status span {display:inline-block;width:58px;height:25px;border-radius:20px;font-size:12px;text-align: center;line-height:23px;box-sizing: border-box}
+    .board_ul .status span.status1 {border:1px solid #aaaaaa;background: #f6f6f6;color:#aaaaaa}
+    .board_ul .status span.status2 {border:1px solid #20beca;background: #e8f8fa;color:#20beca}
+    .board_ul .writer {margin-right:10px;font-size:12px;color:#000;}
+    .board_ul .date {width:58%;font-size:12px;color:#aaaaaa;}
+
+    #section1 > div,
+    #section2 > div,
+    #section3 > div,
+    #section4 > div {border-radius: 5px;border:1px solid #e1e1e1;background: #fff;box-sizing: border-box}
+
+    #section1 {margin-bottom:20px;}
+    #section2 {margin-bottom:20px;}
+
+    #calendar {}
+    #calendar .nav_calendar {height:16px;padding:30px 0;text-align: center;font-size:18px;font-family:notokr-medium, NanumGothicBold}
+    #calendar .nav_calendar img {margin:4px 25px;vertical-align: middle;cursor:pointer;}
+    #calendar .day_header {padding:0 25px;}
+    #calendar .day_header > div {float:left;width:14.28%;text-align: center;box-sizing: border-box}
+    #calendar .day_list {padding:0 25px;}
+    #calendar .day_list > div {height:50px;}
+    #calendar .day_list > div > div {float:left;width:9%;height:25px;margin:10px 2.64%;border-radius:30px;text-align: center;line-height:25px;box-sizing: border-box;cursor: pointer;}
+    #calendar .day_list > div > div.today {color:#fff;background:#253a73;}
+    #calendar .day_list > div > div.has_schedule {border:1px solid #b1b1b1;}
+    #calendar .sun {color:#b36364;}
+    #calendar .sat{color:#677195;}
+    #calendar .schedule_header {height:40px;padding-left:20px;border-bottom:1px solid #e1e1e1;border-top:1px solid #e1e1e1;font-size:15px;line-height:40px;}
+    #calendar .schedule_header .add_schedule {float:right;width:40px;height:41px;margin-top:-1px;background:#253a73;cursor:pointer;text-align: center;}
+    #calendar .schedule_header .add_schedule img {margin:12px;}
+    #calendar .list_schedule {overflow-y:auto;}
+    #calendar .item_schedule {height:42px;margin:20px;padding-left:20px;}
+    #calendar .item_schedule.public {background: url(/res/cms/img/common/bu_calendar_blue.png) no-repeat left center;}
+    #calendar .item_schedule.private {background: url(/res/cms/img/common/bu_calendar_red.png) no-repeat left center;}
+    #calendar .item_schedule > div {float:left;height:100%;}
+    #calendar .item_schedule .box1 {width:18%;margin-right:2%;text-align: center;}
+    #calendar .item_schedule .box1 .day_num {margin-bottom:3px;font-size:18px;font-family: notokr-medium, NanumGothicBold}
+    #calendar .item_schedule .box1 .day_string {font-size:12px;color:#989898}
+    #calendar .item_schedule .box2 {width:80%;}
+    #calendar .item_schedule .box2 .tit {overflow: hidden;margin-top: 2px;margin-bottom:10px;text-overflow: ellipsis;white-space:nowrap;color:#000;}
+    #calendar .item_schedule .box2 .time {color:#6e6e6e}
+    #calendar .more_btn {width:100%;margin-top:20px;height: 43px;border-top:1px solid #e1e1e1;line-height:43px;text-align: center;color:#848484;cursor:pointer}
+
+    #my_course {overflow-y: auto;margin-top:20px;font-size:14px;}
+    #my_course .box_left {display:none;}
+    #my_course .box_left > div {padding: 20px;}
+    #my_course .box_left > div.child_box1 {width:50%;}
+    #my_course .box_left > div.child_box2 {width:50%;text-align: left;}
+    #my_course .box_left .icon_book {width:80px;height:80px;margin: 30px auto;border:1px solid #e1e1e1;border-radius:100px;background-position:center;background-image: url(/res/cms/img/home/img_subject.png);background-repeat: no-repeat;background-color: #fbfbfb;}
+    #my_course .box_left .course_count {margin-top:30px;}
+    #my_course .box_left .term_name {width:50%;margin-top:10px;color:#b7b7b7;}
+    #my_course .box_right {}
+    #my_course .box_right > div > div:first-child {border-top:none;}
+    #my_course .item_course {height:auto;padding:20px;border-top:1px solid #e1e1e1;font-size:11px;color:#000;text-align: left;}
+    #my_course .item_course > div {float:left;}
+    #my_course .category {width:20%;}
+    #my_course .name {width:80%;}
+    #my_course .process {position:relative;width:100%;margin-top:10px;}
+    .student_button {
+        float:left;color:#ffffff;background-color:#9d1c20;border-radius:5px;width:48%;margin-right:4%;height:34px;line-height:34px;text-align:center;cursor:pointer;
+    }
+    .admin_button {
+        float:left;color:#ffffff;background-color:#384b7f;border-radius:5px;width:48%;height:34px;line-height:34px;text-align:center;cursor:pointer;
+    }
+    #my_course .attendance_item {display:none;}
+    #my_course .attendance_item_padding {display:none;}
+
+
+    #my_course .process span {position:absolute;top:-22px;right:0;}
+    #my_course .process .total {overflow:hidden;height:10px;border-radius: 20px;background: #e0e0e0;}
+    #my_course .process .done {
+        display:inline-block;
+        float:left;
+        height:100%;
+        border-radius: 20px;
+        background: rgb(253,151,138);
+        background: linear-gradient(90deg, rgba(253,151,138,1) 0%, rgba(248,121,146,1) 100%);
+    }
+    #my_course .more_btn {width:100%;margin-top:20px;height: 43px;border-top:1px solid #e1e1e1;line-height:43px;text-align: center;color:#848484;;cursor:pointer}
+
+    #notice {overflow-y: auto;margin-top:20px;}
+    #notice .this_header {border-bottom: 1px solid #e1e1e1;}
+    #notice .category_notice {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #notice .category_notice li {height:35px;margin-right:15px;border-bottom:1px solid #fff;line-height:35px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #notice .category_notice li:hover {text-decoration: underline}
+    #notice .category_notice li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #notice .list_notice {overflow-y: auto;min-height: 195px;}
+    #notice .item_notice {height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;padding: 7px 0;}
+    #notice .item_notice.always_top {font-family: notokr-medium, NanumGothicBold}
+    #notice .item_notice > div {float:left;height:100%;text-align: center}
+    #notice .item_notice > div img {vertical-align: middle}
+    #notice .item_notice > div.no {width:10%;display:none;}
+    #notice .item_notice > div.tit {overflow:hidden;width:90%;padding-left:5%;padding-right:5%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #notice .item_notice > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+
+    #qna {overflow-y: auto;margin-top:20px;}
+    #qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #qna .category_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #qna .category_qna li {height:35px;margin-right:15px;border-bottom:1px solid #fff;line-height:35px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #qna .category_qna li:hover {text-decoration: underline}
+    #qna .category_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #qna .list_qna {overflow-y: auto;min-height: 195px;}
+    #qna .item_qna {height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;padding: 7px 0;}
+    #qna .item_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #qna .item_qna > div {float:left;height:100%;text-align: center}
+    #qna .item_qna > div img {vertical-align: middle}
+    #qna .item_qna > div.no {width:10%;display:none;}
+    #qna .item_qna > div.tit {overflow:hidden;width:90%;padding-left:5%;padding-right:5%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #qna .item_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+
+    #course_qna {overflow-y: auto;margin-top:20px;}
+    #course_qna .this_header {border-bottom: 1px solid #e1e1e1;}
+    #course_qna .category_course_qna {display:inline-block;width:100%;padding:0 20px;border-bottom:1px solid #e1e1e1;box-sizing: border-box}
+    #course_qna .category_course_qna li {height:35px;margin-right:15px;border-bottom:1px solid #fff;line-height:35px;text-align: center;cursor:pointer;box-sizing: border-box}
+    #course_qna .category_course_qna li:hover {text-decoration: underline}
+    #course_qna .category_course_qna li.on {border-bottom:2px solid #20beca;color:#20beca}
+    #course_qna .list_course_qna {overflow-y: auto;min-height: 195px;}
+    #course_qna .item_course_qna {height:37px;line-height:37px;border-bottom: 1px solid #e1e1e1;padding: 7px 0;}
+    #course_qna .item_course_qna.always_top {font-family: notokr-medium, NanumGothicBold}
+    #course_qna .item_course_qna > div {float:left;height:100%;text-align: center}
+    #course_qna .item_course_qna > div img {vertical-align: middle}
+    #course_qna .item_course_qna > div.no {width:10%;display:none;}
+    #course_qna .item_course_qna > div.tit {overflow:hidden;width:90%;padding-left:5%;padding-right:5%;text-align: left;text-overflow: ellipsis;white-space: nowrap}
+    #course_qna .item_course_qna > div.tit .new {display:inline-block;width:17px;height:17px;margin-left:5px;border-radius:20px;font-size:10px;text-align: center;line-height:17px;color:#fff;background: #9d1c20}
+
+    #complete_condition {box-sizing: border-box}
+    #complete_condition .content {height:270px;padding:30px;box-sizing: border-box}
+    #complete_condition .box_graph {display:inline-block;float:left;width:50%;height:100%;}
+    .item_process {height:90px;}
+    .item_process .tit_process {margin-bottom:20px;text-align: left;}
+    .item_process .total {overflow:hidden;height:12px;margin-bottom:5px;border-radius: 20px;background: #e0e0e0}
+    .item_process .percent {display:inline-block;float: left;height:100%;border:20px;}
+    .item_process .bar_status {}
+    .item_process .percent {border-radius: 20px;background: #f87992}
+    .item_process .bar_status .left {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+    .item_process .bar_status .right {color:#aaa;}
+    .item_process .bar_status .right span {color:#f87992;font-family: notokr-medium, NanumGothicBold}
+    #complete_condition .cf {text-align:center;}
+    #complete_condition .cf .c100 {margin: 0 auto;float: none;}
+    #complete_condition .cf .left {width:100%;margin-bottom: 20px;}
+    #complete_condition .cf .left p {margin-top: 15px;}
+
+
+    #site_panel > .site_department_title {  display: none; }
+    #site_panel > .site_family_title { display: none; }
+}
+
+
+
+
+
+@media screen and (max-width:767px) {
+
+    .mobile_hide {
+        display:none !important;
+    }
+
+    .mobile_show {
+    }
+
+    .tablet_show {
+        display:none !important;
+    }
+
+    .pc_show {
+        display:none !important;
+    }
+}
+
+@media screen and (min-width:768px) and (max-width:1600px) {
+
+    .tablet_hide {
+        display:none !important;
+    }
+
+    .mobile_show {
+        display:none !important;
+    }
+
+    .tablet_show {
+    }
+
+    .pc_show {
+        display:none !important;
+    }
+
+}
+
+@media screen and (min-width:1601px) {
+
+    .pc_hide {
+        display:none !important;
+    }
+
+    .mobile_show {
+        display:none !important;
+    }
+
+    .tablet_show {
+        display:none !important;
+    }
+
+    .pc_show {
+    }
+
+}

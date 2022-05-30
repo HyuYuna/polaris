@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Import Polaris2-Core Settings -->
+	<import resource="classpath:com/vsquare/polaris2/core/config/root-context.xml" />
+
+	<!-- Multipart -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+
+
+	<bean id="projectSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="/WEB-INF/config/mybatis-config.xml"/>
+		<property name="typeHandlersPackage"
+				  value="com.vsquare.polaris2.core.database.type;${database.type_handlers_package:#{null}}"/>
+		<property name="mapperLocations">
+			<list>
+
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_banner_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_board_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_calendar_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_common_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_content_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_coupon_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_department_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_document_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_institution_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_learning_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_menu_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_message_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_organization_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_payment_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_product_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_rest_api_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_service_provider_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_studio_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_survey_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_sync_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_system_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_task_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_user_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/core/database/mapper/model/model_website_mapper.xml</value>
+
+				<value>classpath:com/vsquare/polaris2/stop/database/mapper/project_mapper.xml</value>
+				<value>classpath:com/vsquare/polaris2/stop/database/mapper/stat_mapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="projectMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.vsquare.polaris2.stop.database.mapper.ProjectMapper"/>
+		<property name="sqlSessionFactory" ref="projectSqlSessionFactory"/>
+	</bean>
+
+	<bean id="statMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="com.vsquare.polaris2.stop.database.mapper.StatMapper"/>
+		<property name="sqlSessionFactory" ref="projectSqlSessionFactory"/>
+	</bean>
+
+
+</beans>

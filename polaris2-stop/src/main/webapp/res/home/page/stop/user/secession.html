@@ -1,0 +1,132 @@
+<style>
+    label[for='termsService'] {
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .password {
+        width: 100%;
+        border: 1px solid #cccccc;
+        padding  : 10px 14px 10px 14px;
+        height: 50px;
+    }
+
+
+    .course_sidebar_list {margin-top : 20px;}
+
+    #join_form .course_sidebar_list label {display: block;position: relative; padding-left: 35px;  /*margin-bottom: 12px;*/cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;}
+    #join_form .course_sidebar_list label input {position: absolute;opacity: 0;cursor: pointer;height: 0;width: 0;}
+    #join_form .course_sidebar_list label .checkmark {position: absolute;top: 0;left: 0;height: 20px;width: 20px;border: 1px solid #ccc;border-radius: 2px;background-color: #ffffff;-webkit-appearance: none;-moz-appearance: none;appearance: none;display: inline-block;vertical-align: middle;cursor: pointer;margin: 0;}
+
+    /* On mouse-over, add a grey background color */
+
+    /* When the checkbox is checked, add a blue background */
+    #join_form label input:checked ~ .checkmark {background-color: #7147a9;border: none;}
+
+
+    /* Create the checkmark/indicator (hidden when not checked) */
+    #join_form label .checkmark:after {content: "";position: absolute;display: none;}
+    #join_form label .checkmark.changed:after {content: "";position: absolute;display: none;}
+
+    /* Show the checkmark when checked */
+    #join_form label input:checked ~ .checkmark:after {display: block;}
+    #join_form label input:checked ~ .checkmark.changed:after {display: block;}
+    /* Style the checkmark/indicator */
+    #join_form label .checkmark:after {
+        content: " ";
+        display: block;
+        width: 7px;
+        height: 4px;
+        border-bottom: 2px solid white;
+        border-left: 2px solid white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-48%, -70%) rotate(-48deg);
+        -ms-transform: translate(-48%, -70%) rotate(-48deg);
+        transform: translate(-48%, -70%) rotate(-48deg);
+    }
+    #join_form label .checkmark.changed:after {left: 6px;top: 3px;width: 4px;height: 7px;border: solid white;border-width: 0 2px 2px 0;-webkit-transform: rotate(45deg);-ms-transform: rotate(45deg);transform: rotate(45deg);}
+
+</style>
+
+<div id="section" class="page_content_body" style="padding-bottom: 0">
+
+    <div class="gray_background">
+
+        <div class="container">
+
+            <article id="join_type" class="floating_box">
+
+                <header>
+                    <h1>회원탈퇴</h1>
+                </header>
+
+
+
+                <form id="join_form">
+<!--                    <h3 class="join_title">유의사항</h3>-->
+<!--                    <div class="guide_box" style="">-->
+
+<!--                        <ul>-->
+<!--                            <li>1.유의사항내용이 나오는 부분입니다.</li>-->
+<!--                            <li>2.유의사항내용이 나오는 부분입니다.</li>-->
+<!--                            <li>3.유의사항내용이 나오는 부분입니다.</li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+
+                    <div class="join_content">
+                        <!-- 이름, 생년월일 입력 -->
+<!--                        <div class="row_group">-->
+<!--                            <div class="join_row">-->
+<!--                                <h3 class="join_title">탈퇴사유</h3>-->
+<!--                                <div class="email_box">-->
+<!--                                    <div class="ps_box">-->
+<!--                                        <select id="reason_code" class="sel" aria-label="이메일주소">-->
+<!--                                            <option value="1" selected>기타</option>-->
+<!--                                            <option value="서비스탈퇴1">서비스탈퇴사유1</option>-->
+<!--                                            <option value="서비스탈퇴2">서비스탈퇴사유2</option>-->
+<!--                                            <option value="서비스탈퇴3">서비스탈퇴사유3</option>-->
+<!--                                            <option value="서비스탈퇴4">서비스탈퇴사유4</option>-->
+<!--                                            <option value="서비스탈퇴5">서비스탈퇴사유5</option>-->
+<!--                                            <option value="서비스탈퇴6">서비스탈퇴사유6</option>-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="join_row">-->
+<!--                                <div class="ps_box txt_box">-->
+<!--                                    <textarea id="etc_reason" rows="5" style="border: none; " />-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <span class="error_next_box" id="emailMsg" style="display:none" aria-live="assertive"></span>-->
+<!--                        </div>-->
+
+                        <h3 class="join_title">비밀번호 확인</h3>
+                        <input class="password" type="password">
+
+                        <div class="course_sidebar_list">
+                            <div class="course_sidebar_list_depth1">
+                                <label><input id="chk_all" type="checkbox">해당 내용을 모두 확인하였으며, 회원탈퇴에 동의합니다.<span class="checkmark"></span></label>
+                            </div>
+                        </div>
+
+<!--                        <div class="login_id_save">-->
+<!--                              <span class="input_chk">-->
+<!--                                <input type="checkbox" id="termsService" name="termsService" class="common_checkbox">-->
+<!--                                <label for="termsService">해당 내용을 모두 확인하였으며, 회원탈퇴에 동의합니다.</label>-->
+<!--                            </span>-->
+<!--                        </div>-->
+
+                        <div class="btn_area">
+                            <span><a href="#" id="btnAgree" class="btn_type btn_primary" role="button">확인</a></span>
+                        </div>
+
+                    </div>
+                </form>
+            </article>
+        </div>
+
+
+    </div>
+</div>
